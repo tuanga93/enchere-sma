@@ -1,0 +1,58 @@
+\documentclass[french,12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper]{geometry}
+\usepackage{babel}
+\usepackage{color}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage[protrusion=true,expansion=true]{microtype}	
+\makeatletter
+\definecolor{bl}{rgb}{0,0.2,0.6}
+\let\LaTeX@startsection\@startsection
+%\renewcommand{\@startsection}[6]{\LaTeX@startsection%
+%{#1}{#2}{#3}{#4}{#5}{\color{bl}\raggedright #6}}
+\renewcommand{\thesection}{\@arabic\c@section}{\color{bl}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+\begin{document}
+%\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\title{}
+\author{}
+\begin{titlepage}
+\centerline{\bf\Large Institut de la Francophonie pour l'Informatique}
+\begin{center}
+\centering
+\includegraphics[width=10cm]{./ifi.png}\\[2cm]
+\end{center}
+\vspace*{0.5cm}
+\centerline{\huge \uppercase {RAPPORT DE PROJET}}
+\vspace*{0.3cm}
+\centerline{\Huge \uppercase {Système Multi-Agent\\[2cm]}}
+\vspace*{0.5cm}
+\centering{\large Subjet: Système d'enchère en ligne}
+
+%\begin{center}
+\vspace*{0.5cm}
+\textbf{Encadrement : }\\
+NGUYEN Manh Hung\\
+\vspace*{0.5cm}
+
+\textbf{Étudiant :} 
+\normalfont NGUYEN Van Tho\\
+KHONG Minh Thanh\\
+\textbf{Promotion   :} \normalfont 17
+
+\vspace*{2.3cm}
+\centerline{Hanoï, Décembre 2012}
+%\end{center}
+\end{titlepage}
+\section{Introduction}
+
+\section*{Préférences}
+\end{document}
