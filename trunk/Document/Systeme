@@ -1,0 +1,48 @@
+Ce fichier décrire le système
+------------------------------
+Permet de faire des enchere en ligne
+suivre le type d'enchère sur Ebay (le meilleur à la fin du temps va gagner)
+---------
+Comment faire
+Le vendeur: 
+- Donner les produits sur le système en indiquant: décire le produit, le prix au début, le temp de fin(?) pour l'enchère, le pas de prix
+
+L'acheteur: 
+- Chercher un produit qu'il veut
+- Donner le prix ('bid' en anglais) pour ce produit
+- Il gagne le produit quand: le prix qu'il propose est le meilleur justqu'à la fin du temps de ce produit, après ça il reçois un message du système pour l'annoncer
+--------
+Ex: 
+Un vendeur propose un livre de M. Washinton(USA) avec le prix 1000$, la date de finir l'enchère c'est 30 février (aujourd'hui c'est 20 février) (10 jours pour faire cet enchère). Ce produit est proposé dans le système, le pas de prix c'est 100$
+Les acheteurs accèdent au système, et savent qu'il y a ce livre. Un acheteur donne 1100$, un autre donne 2000$, ça reste comme ça pour ce jour. Après presque 10 jours, un acheteur propose 3000$, et il n'y a personnne qui donne le mieux. Cet acheteur gagne le produit, et il reçois un message du système
+-----------------------------
+Les cas utilisation:
+Vendeur
+-afficher un produit
+-
+
+Acheteur
+-Chercher un produit
+-Faire l'enchère sur un produit
+
+...ça reste des travaux à faire
+-----------------------------------------------------------------------------------
+À partir de la description du système, 
+5 type d'agents(comme dans le diagrame en ligne trouvé par Selain) 
+----
+Main agent: permet de manager les enchère
+Agent d'echère: Vendeur
+----
+Trois agent pour acheteur
+Agent bidding: afficher le prix
+Agent search: a-t-on besoin de ça il faut réfléchir
+Agent Gui: afficher les information
+----
+Tous les agents s'interagent avec le Main agent
+
+
+
+
+
+
+
