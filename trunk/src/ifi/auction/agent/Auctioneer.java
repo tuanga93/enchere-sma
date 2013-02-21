@@ -1,5 +1,6 @@
 package ifi.auction.agent;
 
+import ifi.auction.Auction;
 import ifi.auction.gui.AuctioneerGui;
 import jade.core.AID;
 import jade.core.Agent;
@@ -43,6 +44,10 @@ public class Auctioneer extends Agent{
 		}
 //		addBehaviour(new RequestPerformer());
 //		addBehaviour(new Reponse());
+	}
+	public boolean addAuction(Auction au){
+		
+		return true;
 	}
 
 }
