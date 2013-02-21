@@ -1,6 +1,8 @@
 package ifi.auction.agent;
 
 import ifi.auction.Auction;
+import ifi.auction.Constant;
+import ifi.auction.behaviour.auctioneer.SendAuctionRequest;
 import ifi.auction.gui.AuctioneerGui;
 import jade.core.AID;
 import jade.core.Agent;
@@ -10,9 +12,6 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Auctioneer extends Agent{
-	private static final String AUCTIONEER_TYPE = "Auctioneer";
-	private static final String AUCTIONEER_NAME = "AUCTIONEER";
-	
 //	private AID[] recepteurAgents;
 	private AuctioneerGui gui;
 	protected void setup(){
@@ -23,8 +22,8 @@ public class Auctioneer extends Agent{
 		dfd.setName(getAID());
 		
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType(AUCTIONEER_TYPE);
-		sd.setName(AUCTIONEER_NAME);
+		sd.setType(Constant.AUCTIONEER_TYPE);
+		sd.setName(Constant.AUCTIONEER_NAME);
 		//DFAgentDescription[] results = DFService.search(, dfd);
 		
 		try {
@@ -45,9 +44,8 @@ public class Auctioneer extends Agent{
 //		addBehaviour(new RequestPerformer());
 //		addBehaviour(new Reponse());
 	}
-	public boolean addAuction(Auction au){
-		
-		return true;
+	public void addAuction(Auction au){
+		addBehaviour(new SendAuctionRequest(au));		
 	}
 
 }

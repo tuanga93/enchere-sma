@@ -1,5 +1,6 @@
 package ifi.auction.agent;
 
+import ifi.auction.Constant;
 import ifi.auction.gui.ProductList;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -11,9 +12,6 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import ifi.auction.behaviour.main.*;
 
 public class Main extends Agent {
-	private static final String MAIN_TYPE = "Main";
-	private static final String MAIN_NAME = "MAIN";
-
 	// private AID[] recepteurAgents;
 	private ProductList gui;
 
@@ -25,8 +23,8 @@ public class Main extends Agent {
 		dfd.setName(getAID());
 
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType(MAIN_TYPE);
-		sd.setName(MAIN_NAME);
+		sd.setType(Constant.MAIN_TYPE);
+		sd.setName(Constant.MAIN_NAME);
 		// DFAgentDescription[] results = DFService.search(, dfd);
 
 		try {
@@ -35,7 +33,7 @@ public class Main extends Agent {
 			DFAgentDescription template = new DFAgentDescription();
 			DFAgentDescription[] results = DFService.search(this, template);
 			ServiceDescription serviceDescription = new ServiceDescription();
-			serviceDescription.setType(MAIN_TYPE);
+			serviceDescription.setType(Constant.MAIN_TYPE);
 			template.addServices(serviceDescription);
 		} catch (FIPAException e) {
 			// TODO Auto-generated catch block
