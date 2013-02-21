@@ -44,7 +44,8 @@ public class SendAuctionRequest extends OneShotBehaviour {
 			cfp.setConversationId("");
 			cfp.addReceiver(mainAgent);
 			//cfp.setReplyWith("cfp" + System.currentTimeMillis());
-			myAgent.send(cfp);							
+			myAgent.send(cfp);
+			System.out.println("Send ...");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
