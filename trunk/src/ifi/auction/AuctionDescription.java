@@ -2,12 +2,15 @@ package ifi.auction;
 
 
 import jade.content.Concept;
+import jade.core.AID;
 import jade.util.leap.Serializable;
 
 public class AuctionDescription implements Concept, Serializable{
 	private double minStep;
 	private String productName;
 	private double initialPrice;
+	private double currentPrice;
+	private AID currentBidder;
 	private String expire;
 	private String description;
 	//private Set<Good> goods = null;
@@ -19,6 +22,7 @@ public class AuctionDescription implements Concept, Serializable{
 		this.initialPrice = initialPrice;
 		this.expire = expire;
 		this.description = description;
+		this.currentPrice = initialPrice;
 	}
 	public double getMinStep() {
 		return minStep;
@@ -49,6 +53,18 @@ public class AuctionDescription implements Concept, Serializable{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public double getCurrentPrice() {
+		return currentPrice;
+	}
+	public void setCurrentPrice(double currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+	public AID getCurrentBidder() {
+		return currentBidder;
+	}
+	public void setCurrentBidder(AID currentBidder) {
+		this.currentBidder = currentBidder;
 	}
 	
 }
