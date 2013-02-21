@@ -7,4 +7,6 @@ public class Constant {
 	public static final String AUCTIONEER_NAME = "AUCTIONEER";
 	public static final String BIDDER_TYPE = "Bidder";
 	public static final String BIDDER_NAME = "BIDDER";
+	
+	public static final String ADD_AUCTION = "addAuction";
 }
