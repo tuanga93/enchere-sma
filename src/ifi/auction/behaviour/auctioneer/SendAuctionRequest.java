@@ -10,15 +10,15 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import ifi.auction.Auction;
+import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
 public class SendAuctionRequest extends Behaviour {
 	private static final int REPLY_TIMEOUT = 1000;
-	private Auction auction;
+	private AuctionDescription auction;
 	
 	private AID mainAgent;
 	
-	public SendAuctionRequest(Auction a){
+	public SendAuctionRequest(AuctionDescription a){
 		auction = a;
 	}
 
@@ -26,7 +26,7 @@ public class SendAuctionRequest extends Behaviour {
 	public void action() {
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription serviceDescription = new ServiceDescription();
-		serviceDescription.setType(Constant.MAIN_TYPE);
+		serviceDescription.setType(Constant.MAIN_TYPE);		
 		template.addServices(serviceDescription);		
 		DFAgentDescription[] results = null;
 		try {

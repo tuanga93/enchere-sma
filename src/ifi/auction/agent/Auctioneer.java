@@ -1,6 +1,6 @@
 package ifi.auction.agent;
 
-import ifi.auction.Auction;
+import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
 import ifi.auction.behaviour.auctioneer.SendAuctionRequest;
 import ifi.auction.gui.AuctioneerGui;
@@ -41,7 +41,7 @@ public class Auctioneer extends Agent{
 //		addAuction(au);
 		
 	}
-	public void addAuction(Auction au){
+	public void addAuction(AuctionDescription au){
 		addBehaviour(new SendAuctionRequest(au));		
 	}
 
