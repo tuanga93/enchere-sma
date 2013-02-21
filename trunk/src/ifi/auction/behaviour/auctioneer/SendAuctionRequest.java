@@ -41,7 +41,7 @@ public class SendAuctionRequest extends Behaviour {
 			ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 			try {
 				cfp.setContentObject(auction);
-				cfp.setConversationId("xxx");
+				cfp.setConversationId(Constant.ADD_AUCTION);				
 				cfp.addReceiver(mainAgent);
 System.out.println(mainAgent);				
 				//cfp.setReplyWith("cfp" + System.currentTimeMillis());

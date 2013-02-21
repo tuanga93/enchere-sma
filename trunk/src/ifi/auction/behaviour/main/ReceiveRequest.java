@@ -1,6 +1,10 @@
 package ifi.auction.behaviour.main;
 
 import ifi.auction.Auction;
+import ifi.auction.Constant;
+import ifi.auction.agent.Auctioneer;
+import jade.core.AID;
+import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
@@ -16,6 +20,13 @@ System.out.println("Receiving...");
 		if (msg != null) {
 			try {
 				Auction auction = (Auction) msg.getContentObject();
+				AID auctioneer = msg.getSender();
+				String conversationId = msg.getConversationId();
+				if(conversationId.equals(Constant.ADD_AUCTION)){
+					//Agent newAuction = new Agent();
+					//newAuction.
+					Auctioneer newAuction = new Auctioneer();
+				}
 				System.out.println("receive message from seller : " + auction.getProductName());
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
