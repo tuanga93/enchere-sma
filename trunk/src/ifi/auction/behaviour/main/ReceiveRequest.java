@@ -19,15 +19,20 @@ System.out.println("Receiving...");
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
 			try {
-				AuctionDescription auction = (AuctionDescription) msg.getContentObject();
-				AID auctioneer = msg.getSender();
-				String conversationId = msg.getConversationId();
-				if(conversationId.equals(Constant.ADD_AUCTION)){
-					//Agent newAuction = new Agent();
-					//newAuction.
-					Auctioneer newAuction = new Auctioneer();
+				String content = msg.getContent();
+				if(content != null){
+					
+				}else{
+					AuctionDescription auction = (AuctionDescription) msg.getContentObject();
+					AID auctioneer = msg.getSender();
+					String conversationId = msg.getConversationId();
+					if(conversationId.equals(Constant.ADD_AUCTION)){
+						//Agent newAuction = new Agent();
+						//newAuction.
+						Auctioneer newAuction = new Auctioneer();
+					}
+					System.out.println("receive message from seller : " + auction.getProductName());
 				}
-				System.out.println("receive message from seller : " + auction.getProductName());
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
