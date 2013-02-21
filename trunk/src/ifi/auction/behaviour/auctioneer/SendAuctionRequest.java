@@ -3,6 +3,7 @@ package ifi.auction.behaviour.auctioneer;
 import java.io.IOException;
 
 import jade.core.AID;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -11,7 +12,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import ifi.auction.Auction;
 import ifi.auction.Constant;
-public class SendAuctionRequest extends OneShotBehaviour {
+public class SendAuctionRequest extends Behaviour {
 	private static final int REPLY_TIMEOUT = 1000;
 	private Auction auction;
 	
@@ -24,31 +25,38 @@ public class SendAuctionRequest extends OneShotBehaviour {
 	@Override
 	public void action() {
 		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription serviceDescription = new ServiceDescription();
+		serviceDescription.setType(Constant.MAIN_TYPE);
+		template.addServices(serviceDescription);		
 		DFAgentDescription[] results = null;
 		try {
 			results = DFService.search(myAgent, template);
 		} catch (FIPAException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		ServiceDescription serviceDescription = new ServiceDescription();
-		serviceDescription.setType(Constant.MAIN_TYPE);
-		template.addServices(serviceDescription);
-		if(results != null && results.length == 1){
+		}		
+		if(results != null && results.length > 0){
 			//mainAgent = new AID();
 			mainAgent = results[0].getName();
+			ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+			try {
+				cfp.setContentObject(auction);
+				cfp.setConversationId("xxx");
+				cfp.addReceiver(mainAgent);
+System.out.println(mainAgent);				
+				//cfp.setReplyWith("cfp" + System.currentTimeMillis());
+				myAgent.send(cfp);
+				System.out.println("Send ...");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
 		}
-		ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-		try {
-			cfp.setContentObject(auction);
-			cfp.setConversationId("");
-			cfp.addReceiver(mainAgent);
-			//cfp.setReplyWith("cfp" + System.currentTimeMillis());
-			myAgent.send(cfp);
-			System.out.println("Send ...");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
+
+	@Override
+	public boolean done() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
