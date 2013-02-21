@@ -25,7 +25,14 @@ public class Main extends Agent {
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType(Constant.MAIN_TYPE);
 		sd.setName(Constant.MAIN_NAME);
-		// DFAgentDescription[] results = DFService.search(, dfd);
+		dfd.addServices(sd);
+		try {
+			DFService.register(this, dfd);	
+		} catch (FIPAException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		addBehaviour(new ReceiveRequest());
 		addBehaviour(new AddAuction());
 		addBehaviour(new GetAuction());

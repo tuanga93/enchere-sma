@@ -24,25 +24,22 @@ public class Auctioneer extends Agent{
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType(Constant.AUCTIONEER_TYPE);
 		sd.setName(Constant.AUCTIONEER_NAME);
+		dfd.addServices(sd);
 		//DFAgentDescription[] results = DFService.search(, dfd);
 		
 		try {
 			DFService.register(this, dfd);		
-			DFAgentDescription template = new DFAgentDescription();
-			DFAgentDescription[] results = DFService.search(this, template);
-			ServiceDescription serviceDescription = new ServiceDescription();
-			serviceDescription.setType("Recepteur");
-			template.addServices(serviceDescription);			
-//			recepteurAgents = new AID[results.length];
-//			for (int i = 0; i < results.length; ++i) {
-//				recepteurAgents[i] = results[i].getName();
-//			}			
 		} catch (FIPAException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //		addBehaviour(new RequestPerformer());
 //		addBehaviour(new Reponse());
+		
+		//test
+//		Auction au = new Auction("Bookk", 10000, 100, "123456", "XXX");
+//		addAuction(au);
+		
 	}
 	public void addAuction(Auction au){
 		addBehaviour(new SendAuctionRequest(au));		
