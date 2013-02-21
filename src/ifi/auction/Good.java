@@ -3,16 +3,21 @@ package ifi.auction;
 import jade.content.Concept;
 
 public class Good implements Concept {
-    private int initialPrize;
+    private int initialPrice;
     private int availableCount;
     private int reservationPrize;
     
     public Good(){}
     
-    public Good(int initialPrize, int availableCount, int reservationPrize) {
-        this.initialPrize = initialPrize;
+    public Good(int initialPrice, int availableCount, int reservationPrize) {
+        this.initialPrice = initialPrice;
         this.availableCount = availableCount;
         this.reservationPrize = reservationPrize;
+    }
+    public Good(int initialPrice){
+    	this.initialPrice = initialPrice;
+    	this.availableCount = 1;
+    	this.reservationPrize = 0;
     }
     
     public int getAvailableCount() {
@@ -32,11 +37,11 @@ public class Good implements Concept {
     }
 
     public int getInitialPrize() {
-        return initialPrize;
+        return initialPrice;
     }
 
     public void setInitialPrize(int initialPrize) {
-        this.initialPrize = initialPrize;
+        this.initialPrice = initialPrize;
     }
 
 }

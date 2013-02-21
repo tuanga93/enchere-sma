@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import ifi.auction.Auction;
+import ifi.auction.Good;
 import ifi.auction.agent.Auctioneer;
 
 import javax.swing.JButton;
@@ -69,12 +71,19 @@ public class AuctioneerGui extends JFrame {
 		JButton addButton = new JButton(LBL_ADD);
 		addButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				try {
+				try {					
+					double minStep = Double.parseDouble(txtMinStep.getText());
+					String productName = txtName.getText();
+					double initialPrice = Double.parseDouble(txtPrice.getText());
+					String expire = txtExpire.getText();
+					String description = txtDescription.getText();
+					Auction auction = new Auction(productName, initialPrice, minStep, expire, description);
 //					String title = titleField.getText().trim();
 //					String price = priceField.getText().trim();
 //					//auctioneer.updateCatalogue(title, Integer.parseInt(price));
 //					titleField.setText("");
 //					priceField.setText("");
+					auctioneer.addAuction(auction);
 				}
 				catch (Exception e) {
 					JOptionPane.showMessageDialog(AuctioneerGui.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
