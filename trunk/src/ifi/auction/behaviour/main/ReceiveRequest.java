@@ -1,6 +1,6 @@
 package ifi.auction.behaviour.main;
 
-import ifi.auction.Auction;
+import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
 import ifi.auction.agent.Auctioneer;
 import jade.core.AID;
@@ -19,7 +19,7 @@ System.out.println("Receiving...");
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
 			try {
-				Auction auction = (Auction) msg.getContentObject();
+				AuctionDescription auction = (AuctionDescription) msg.getContentObject();
 				AID auctioneer = msg.getSender();
 				String conversationId = msg.getConversationId();
 				if(conversationId.equals(Constant.ADD_AUCTION)){

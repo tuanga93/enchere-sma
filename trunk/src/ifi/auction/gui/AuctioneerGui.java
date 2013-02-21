@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import ifi.auction.Auction;
+import ifi.auction.AuctionDescription;
 import ifi.auction.Good;
 import ifi.auction.agent.Auctioneer;
 
@@ -77,7 +77,7 @@ public class AuctioneerGui extends JFrame {
 					double initialPrice = Double.parseDouble(txtPrice.getText());
 					String expire = txtExpire.getText();
 					String description = txtDescription.getText();
-					Auction auction = new Auction(productName, initialPrice, minStep, expire, description);
+					AuctionDescription auction = new AuctionDescription(productName, initialPrice, minStep, expire, description);
 //					String title = titleField.getText().trim();
 //					String price = priceField.getText().trim();
 //					//auctioneer.updateCatalogue(title, Integer.parseInt(price));
