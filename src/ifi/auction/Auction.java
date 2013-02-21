@@ -1,11 +1,10 @@
 package ifi.auction;
 
-import java.util.Date;
-import java.util.Set;
 
 import jade.content.Concept;
+import jade.util.leap.Serializable;
 
-public class Auction implements Concept{
+public class Auction implements Concept, Serializable{
 	private double minStep;
 	private String productName;
 	private double initialPrice;
