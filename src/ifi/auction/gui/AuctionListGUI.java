@@ -3,6 +3,7 @@ package ifi.auction.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,9 +87,10 @@ public class AuctionListGUI extends JFrame implements ActionListener{
         layoutHelper.addTextField(txtExpire, p);
         layoutHelper.addLabel(lblDescription, p);
         layoutHelper.addTextField(txtDescription, p);
-
+        JPanel panelListAuction = new JPanel(new GridLayout());
+        panelListAuction.add(scrollPane);
 		//getContentPane().add(p, BorderLayout.CENTER);
-        getContentPane().add(scrollPane, BorderLayout.CENTER);
+        getContentPane().add(panelListAuction, BorderLayout.CENTER);
 		
 		JButton addButton = new JButton(LBL_ADD);
 		addButton.addActionListener( new ActionListener() {

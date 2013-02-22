@@ -13,6 +13,7 @@ public class AuctionDescription implements Concept, Serializable{
 	private AID currentBidder;
 	private String expire;
 	private String description;
+	private AID auction;
 	//private Set<Good> goods = null;
 	public AuctionDescription(String productName, double initialPrice, double minStep, 
 			String expire, String description) {
@@ -23,6 +24,7 @@ public class AuctionDescription implements Concept, Serializable{
 		this.expire = expire;
 		this.description = description;
 		this.currentPrice = initialPrice;
+		this.auction = null;
 	}
 	public double getMinStep() {
 		return minStep;
@@ -66,5 +68,10 @@ public class AuctionDescription implements Concept, Serializable{
 	public void setCurrentBidder(AID currentBidder) {
 		this.currentBidder = currentBidder;
 	}
-	
+	public AID getAuction() {
+		return auction;
+	}
+	public void setAuction(AID auction) {
+		this.auction = auction;
+	}	
 }

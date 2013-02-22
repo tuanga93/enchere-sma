@@ -50,6 +50,7 @@ public class Auctioneer extends CommonAuctionAgent{
 	}
 	public List<AuctionDescription> getAuctionList(){
 		AuctionDescription a = new AuctionDescription("xxx", 1234, 124, "12346", "XXXXXXXXX");
+		a.setAuction(getAID());
 		List<AuctionDescription> b = new ArrayList<AuctionDescription>();
 		b.add(a);
 		return b;
