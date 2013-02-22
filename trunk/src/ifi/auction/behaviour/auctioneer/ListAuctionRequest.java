@@ -41,9 +41,9 @@ public class ListAuctionRequest extends Behaviour {
 			ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 
 			cfp.setContent(Constant.GET_AUCTION_LIST);
-				cfp.addReceiver(mainAgent);
-System.out.println(mainAgent);				
-				//cfp.setReplyWith("cfp" + System.currentTimeMillis());
+			cfp.addReceiver(mainAgent);
+			System.out.println(mainAgent);				
+			//cfp.setReplyWith("cfp" + System.currentTimeMillis());
 			myAgent.send(cfp);
 			System.out.println("Send ...");
 		}
