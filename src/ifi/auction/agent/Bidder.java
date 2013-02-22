@@ -47,5 +47,8 @@ System.out.println("I'm new bidder in the system");
 		b.add(a);
 		return b;
 	}
-
+	public void bid(AuctionDescription auctionDescription){
+		
+	}
+	
 }

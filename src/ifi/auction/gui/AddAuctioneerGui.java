@@ -44,11 +44,8 @@ public class AddAuctioneerGui extends JPanel {
 	private JLabel lblMinStep = new JLabel(LBL_MIN_STEP);
 	private JLabel lblExpire = new JLabel(LBL_EXPIRE);
 	private JLabel lblDescription = new JLabel(LBL_DESCRIPTION);
-	
-	private Auctioneer auctioneer;
-	public AddAuctioneerGui(Auctioneer a){		
 		
-		auctioneer = a;
+	public AddAuctioneerGui(){		
 		
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());	
@@ -67,48 +64,5 @@ public class AddAuctioneerGui extends JPanel {
 
 		add(p, BorderLayout.CENTER);
 		
-		JButton addButton = new JButton(LBL_ADD);
-		addButton.addActionListener( new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				try {					
-					double minStep = Double.parseDouble(txtMinStep.getText());
-					String productName = txtName.getText();
-					double initialPrice = Double.parseDouble(txtPrice.getText());
-					String expire = txtExpire.getText();
-					String description = txtDescription.getText();
-					AuctionDescription auction = new AuctionDescription(productName, initialPrice, minStep, expire, description);
-//					String title = titleField.getText().trim();
-//					String price = priceField.getText().trim();
-//					//auctioneer.updateCatalogue(title, Integer.parseInt(price));
-//					titleField.setText("");
-//					priceField.setText("");
-					auctioneer.addAuction(auction);
-				}
-				catch (Exception e) {
-					JOptionPane.showMessageDialog(AddAuctioneerGui.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-				}
-			}
-		} );
-//		p = new JPanel();
-//		p.add(addButton);
-//		add(p, BorderLayout.SOUTH);
-		
-		// Make the agent terminate when the user closes 
-		// the GUI using the button on the upper right corner	
-//		addWindowListener(new	WindowAdapter() {
-//			public void windowClosing(WindowEvent e) {
-//				auctioneer.doDelete();
-//			}
-//		} );
-//		
-//		setResizable(false);		
 	}
-//	public void showGui() {
-//		pack();
-//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//		int centerX = (int)screenSize.getWidth() / 2;
-//		int centerY = (int)screenSize.getHeight() / 2;
-//		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
-//		super.setVisible(true);
-//	}
 }
