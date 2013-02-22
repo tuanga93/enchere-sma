@@ -46,7 +46,7 @@ public class SendAuctionInfor extends Behaviour {
 				cfp.setContentObject(auction);
 				cfp.setConversationId(Constant.AUCTION_INFOR);				
 				cfp.addReceiver(mainAgent);
-System.out.println(mainAgent);				
+System.out.println("SendAuctionInformation");				
 				//cfp.setReplyWith("cfp" + System.currentTimeMillis());
 				myAgent.send(cfp);
 				System.out.println("Send Info To MainAgent...");

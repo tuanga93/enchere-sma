@@ -25,7 +25,7 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		// Receive request from Client(bidder or auctionner)
-		System.out.println("Receiving...");
+		System.out.println("Auction: Receiving...");
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
 			try {

@@ -2,17 +2,11 @@ package ifi.auction.behaviour.main;
 
 import java.io.IOException;
 
-import sun.security.action.GetLongAction;
 import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
-import ifi.auction.agent.Auctioneer;
+import ifi.auction.agent.Main;
 import jade.core.AID;
-import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAException;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import jade.wrapper.AgentContainer;
@@ -21,85 +15,59 @@ import jade.wrapper.AgentController;
 public class ReceiveRequest extends CyclicBehaviour {
 	private AgentContainer ac = null;
 	private AgentController t1 = null;
+	private Main mainAgent;
+	
+	public ReceiveRequest(Main mainAgent){
+		this.mainAgent = mainAgent;
+	}
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
 		// Receive request from Client(bidder or auctionner)
-		System.out.println("Receiving...");
+		System.out.println("Wait for message...");
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
 			try {
 				String content = msg.getContent();
 				System.out.println(content +"Get content message");
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
-					
-					///---------------------------------
-					System.out.println("request list of auction");
-					
-					//----------------------------------
-					DFAgentDescription template = new DFAgentDescription();
-					ServiceDescription sd = new ServiceDescription();
-					sd.setType(Constant.AUCTION_TYPE);
-					template.addServices(sd);
-					try {
-						DFAgentDescription[] result = DFService.search(myAgent,
-								template);
-						if (result.length >= 0) {
-							ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-							for (int i = 0; i < result.length; i++) {
-								cfp.addReceiver(result[i].getName());
-								// System.out.println(result[i].getName());
-								cfp.setContent(Constant.GET_AUCTION_LIST);
-							}
-							myAgent.send(cfp);
-							System.out.println("Main: sended to auction");
-						}
-
-					} catch (FIPAException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					//--------------------------------------
-					
-					
-//					ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-//					try {
-//						cfp.setContent(Constant.GET_AUCTION_LIST);
-//						cfp.setConversationId(Constant.ADD_AUCTION);				
-//						//cfp.addReceiver(new AID("Auction1", AID.ISLOCALNAME));
-//						//System.out.println();				
-//						//cfp.setReplyWith("cfp" + System.currentTimeMillis());
-//						myAgent.send(cfp);
-//						System.out.println("Send to auction");
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}		
-					//------------------------------------
+					System.out.println("receive message");
+					// Message received. Process it
+					String title = msg.getContent();
+					ACLMessage reply = msg.createReply();
+					// The requested book is NOT available for sale.
+					reply.setContent("Seller: " + title);
+					reply.setContentObject(mainAgent.getAuctionDescriptions());
+					System.out.println(reply.getContent());
+					myAgent.send(reply);
 					
 				} else {
 					
-					AuctionDescription auction = (AuctionDescription) msg
+					AuctionDescription auctionDescription = (AuctionDescription) msg
 							.getContentObject();
 					AID auctioneer = msg.getSender();
 					String auctionName = "Auction1" + Math.random() ;//+ msg.getSender();
 					try {
-						System.out.println("hello");
+						System.out.println("Auction creation hello");
 						// create agent t1 on the same container of the creator agent
 						AgentContainer container = (AgentContainer)myAgent.getContainerController(); // get a container controller for creating new agents
 						t1 = container.createNewAgent(auctionName, "ifi.auction.agent.Auction", null);
 						t1.start();
-						
+												
 						//send un message to t1
 						ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 						try {
-							cfp.setContentObject(auction);
-							cfp.setConversationId(Constant.ADD_AUCTION);				
-							cfp.addReceiver(new AID(auctionName, AID.ISLOCALNAME));
-							System.out.println();				
-							//cfp.setReplyWith("cfp" + System.currentTimeMillis());
-							myAgent.send(cfp);
-							System.out.println("Send ...asdfsadfd");
+							AID newAuction = new AID(auctionName, AID.ISLOCALNAME);
+							System.out.println(newAuction.getName());
+							auctionDescription.setAuction(newAuction);
+							cfp.setContentObject(auctionDescription);
+//							cfp.setConversationId(Constant.ADD_AUCTION);	
+							cfp.addReceiver(newAuction);
+//							mainAgent.getAuctionDescriptions().put(newAuction, auctionDescription);
+//							System.out.println();				
+//							//cfp.setReplyWith("cfp" + System.currentTimeMillis());
+//							myAgent.send(cfp);
+//							System.out.println("Send ...asdfsadfd");
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -113,9 +81,12 @@ public class ReceiveRequest extends CyclicBehaviour {
 
 					
 					System.out.println("receive message about product : "
-							+ auction.getProductName());
+							+ auctionDescription.getProductName());
 				}
 			} catch (UnreadableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

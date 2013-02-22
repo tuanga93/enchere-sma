@@ -1,6 +1,10 @@
 package ifi.auction.agent;
 
+import java.util.Hashtable;
+
+import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -11,7 +15,7 @@ import ifi.auction.behaviour.main.*;
 
 public class Main extends Agent {
 
-
+	private Hashtable<AID, AuctionDescription> auctionDescriptions = new Hashtable<AID, AuctionDescription>();
 	protected void setup() {
 
 		// gui = new ProductList(this);
@@ -30,9 +34,16 @@ public class Main extends Agent {
 			e.printStackTrace();
 		}
 		
-		addBehaviour(new ReceiveRequest());
+		addBehaviour(new ReceiveRequest(this));
 		addBehaviour(new AddAuction());
 		addBehaviour(new GetAuction());
+	}
+	public Hashtable<AID, AuctionDescription> getAuctionDescriptions() {
+		return auctionDescriptions;
+	}
+	public void setAuctionDescriptions(
+			Hashtable<AID, AuctionDescription> auctionDescriptions) {
+		this.auctionDescriptions = auctionDescriptions;
 	}
 
 }
