@@ -92,7 +92,7 @@ public class MyAuctionListGUI extends JFrame implements ActionListener{
 					}else{
 					AuctionDescription auctionDescription = MyAuctionListGUI.this.getSelectedAuction();
 					BidGui bidGui = new BidGui(auctionDescription);
-					 int result = JOptionPane.showConfirmDialog(null, bidGui, 
+					int result = JOptionPane.showConfirmDialog(null, bidGui, 
 				               "Faire un enchère", JOptionPane.OK_CANCEL_OPTION);
 				      if (result == JOptionPane.OK_OPTION) {
 							try {					

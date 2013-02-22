@@ -1,5 +1,6 @@
 package ifi.auction.behaviour.auction;
 
+import ifi.auction.agent.Auction;
 import ifi.auction.behaviour.auction.*;
 import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
@@ -12,8 +13,11 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 
 	private AuctionDescription auctionDescription = null;
 	
-	public ReceiveRequestAuction(AuctionDescription auctionDes) {
+	private Auction auctionAgent;
+	
+	public ReceiveRequestAuction(Auction a, AuctionDescription auctionDes) {
 		// TODO Auto-generated constructor stub
+		auctionAgent = a;
 		auctionDescription= auctionDes;
 	}
 
@@ -33,15 +37,12 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 					myAgent.addBehaviour(new SendAuctionInfor(auctionDescription));
 					
 				} else {
-					auctionDescription = (AuctionDescription) msg
-							.getContentObject();
-System.out.println("I'm new auction for: "
-							+ auctionDescription.getProductName()+ auctionDescription.getCurrentBidder());
-					try {
-						System.out.println("hello");
-					} catch (Exception any) {
-						any.printStackTrace();
-					}
+					//add auction
+					auctionDescription = (AuctionDescription) msg.getContentObject();
+					auctionAgent.setAuctionDescription(auctionDescription);
+					auctionAgent.getBidders().add(msg.getSender());
+					//notification
+					auctionAgent.addBehaviour(new NotifyBidders(auctionAgent.getBidders(), auctionDescription));
 				}
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block

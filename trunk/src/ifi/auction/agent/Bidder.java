@@ -5,10 +5,7 @@ import java.util.List;
 
 import ifi.auction.AuctionDescription;
 import ifi.auction.behaviour.bidder.*;
-import ifi.auction.gui.AuctioneerGui;
-import ifi.auction.gui.AuctionListGUI;
 import ifi.auction.gui.MyAuctionListGUI;
-import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -40,6 +37,7 @@ public class Bidder extends CommonAuctionAgent{
 		}
 System.out.println("I'm new bidder in the system");
 		addBehaviour(new RequestAuctionList());
+		addBehaviour(new ReceiveInfor(this));
 //		addBehaviour(new Reponse());
 	}
 	public List<AuctionDescription> getAuctionList(){
@@ -49,7 +47,7 @@ System.out.println("I'm new bidder in the system");
 		return b;
 	}
 	public void bid(AuctionDescription auctionDescription){
-		
+		addBehaviour(new SendBid(auctionDescription));
 	}
 	
 }
