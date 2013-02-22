@@ -20,6 +20,9 @@ public class Model extends AbstractTableModel{
 											"Date limitée",
 											"Description"
 											};
+	public Model(){
+		
+	}
 	public Model(List<AuctionDescription> auctionDescriptions){
 		this.auctionDescriptions = auctionDescriptions;
 	}

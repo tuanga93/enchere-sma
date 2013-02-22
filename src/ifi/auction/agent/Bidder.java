@@ -19,8 +19,8 @@ public class Bidder extends CommonAuctionAgent{
 	private MyAuctionListGUI gui;
 	protected void setup(){
 		
-		gui = new MyAuctionListGUI(this);
-		gui.showGui();
+//		gui = new MyAuctionListGUI(this);		
+//		gui.showGui();
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		
@@ -48,6 +48,12 @@ System.out.println("I'm new bidder in the system");
 	}
 	public void bid(AuctionDescription auctionDescription){
 		addBehaviour(new SendBid(auctionDescription));
+	}
+	public MyAuctionListGUI getGui() {
+		return gui;
+	}
+	public void setGui(MyAuctionListGUI gui) {
+		this.gui = gui;
 	}
 	
 }

@@ -40,7 +40,7 @@ public class MyAuctionListGUI extends JFrame implements ActionListener{
 		super(a.getLocalName());
 		
 		bidder = a;
-		model = new Model(a.getAuctionList());
+		model = new Model();
         table = new JTable(model);
         
         
