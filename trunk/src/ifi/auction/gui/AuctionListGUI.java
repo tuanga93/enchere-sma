@@ -2,7 +2,6 @@ package ifi.auction.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,18 +11,14 @@ import java.awt.event.WindowEvent;
 
 import ifi.auction.AuctionDescription;
 import ifi.auction.agent.Auctioneer;
-import ifi.auction.agent.CommonAuctionAgent;
 import ifi.auction.model.Model;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -32,7 +27,7 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 	
 	private static final String LBL_ADD = "Ajouter";
 		
-	private Auctioneer bidder;
+	private Auctioneer auctioneer;	
 	
 	private	JTable		table;
 	private Model model;
@@ -41,7 +36,7 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 	public AuctionListGUI(Auctioneer a){
 		super(a.getLocalName());
 		
-		bidder = a;
+		auctioneer = a;
 		model = new Model(a.getAuctionList());
         table = new JTable(model);
         
@@ -89,9 +84,9 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 		addButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					AddAuctioneerGui addAuctioneerGui = new AddAuctioneerGui(bidder);
+					AddAuctioneerGui addAuctioneerGui = new AddAuctioneerGui();
 					 int result = JOptionPane.showConfirmDialog(null, addAuctioneerGui, 
-				               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+				               "Ajouter un enchère", JOptionPane.OK_CANCEL_OPTION);
 				      if (result == JOptionPane.OK_OPTION) {
 							try {					
 								double minStep = Double.parseDouble(addAuctioneerGui.txtMinStep.getText());
@@ -105,7 +100,7 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 //								//auctioneer.updateCatalogue(title, Integer.parseInt(price));
 //								titleField.setText("");
 //								priceField.setText("");
-								bidder.addAuction(auction);				    	  
+								auctioneer.addAuction(auction);				    	  
 							}
 							catch (Exception e) {
 								JOptionPane.showMessageDialog(AuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
@@ -125,7 +120,7 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 		// the GUI using the button on the upper right corner	
 		addWindowListener(new	WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				bidder.doDelete();
+				auctioneer.doDelete();
 			}
 		} );
 		
