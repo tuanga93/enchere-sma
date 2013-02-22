@@ -9,7 +9,10 @@ import ifi.auction.agent.Auctioneer;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import jade.wrapper.AgentContainer;
@@ -27,24 +30,51 @@ public class ReceiveRequest extends CyclicBehaviour {
 		if (msg != null) {
 			try {
 				String content = msg.getContent();
-				System.out.println(content);
+				System.out.println(content +"Get content message");
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
 					
 					///---------------------------------
 					System.out.println("request list of auction");
-					ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+					
+					//----------------------------------
+					DFAgentDescription template = new DFAgentDescription();
+					ServiceDescription sd = new ServiceDescription();
+					sd.setType(Constant.AUCTION_TYPE);
+					template.addServices(sd);
 					try {
-						cfp.setContent(Constant.GET_AUCTION_LIST);
-						cfp.setConversationId(Constant.ADD_AUCTION);				
-						cfp.addReceiver(new AID("Auction1", AID.ISLOCALNAME));
-						//System.out.println();				
-						//cfp.setReplyWith("cfp" + System.currentTimeMillis());
-						myAgent.send(cfp);
-						System.out.println("Send to auction");
-					} catch (Exception e) {
+						DFAgentDescription[] result = DFService.search(myAgent,
+								template);
+						if (result.length >= 0) {
+							ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+							for (int i = 0; i < result.length; i++) {
+								cfp.addReceiver(result[i].getName());
+								// System.out.println(result[i].getName());
+								cfp.setContent(Constant.GET_AUCTION_LIST);
+							}
+							myAgent.send(cfp);
+							System.out.println("Main: sended to auction");
+						}
+
+					} catch (FIPAException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}		
+					}
+					//--------------------------------------
+					
+					
+//					ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+//					try {
+//						cfp.setContent(Constant.GET_AUCTION_LIST);
+//						cfp.setConversationId(Constant.ADD_AUCTION);				
+//						//cfp.addReceiver(new AID("Auction1", AID.ISLOCALNAME));
+//						//System.out.println();				
+//						//cfp.setReplyWith("cfp" + System.currentTimeMillis());
+//						myAgent.send(cfp);
+//						System.out.println("Send to auction");
+//					} catch (Exception e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}		
 					//------------------------------------
 					
 				} else {
