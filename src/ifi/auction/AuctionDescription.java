@@ -6,9 +6,9 @@ import jade.core.AID;
 import jade.util.leap.Serializable;
 
 public class AuctionDescription implements Concept, Serializable{
-	private double minStep;
 	private String productName;
 	private double initialPrice;
+	private double minStep;
 	private double currentPrice;
 	private AID currentBidder;
 	private String expire;
