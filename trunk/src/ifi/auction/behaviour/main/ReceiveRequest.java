@@ -24,17 +24,18 @@ public class ReceiveRequest extends CyclicBehaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		// Receive request from Client(bidder or auctionner)
-		System.out.println("Wait for message...");
+		System.out.println("Main ReceiveRequest: Wait for message...");
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
 			try {
 				String content = msg.getContent();
-				System.out.println(content +"Get content message");
+				
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
-					System.out.println("receive message");
 					// Message received. Process it
+					System.out.println("Main ReceiveRequest:"+content +"Receive getAuction list");
 					String title = msg.getContent();
 					ACLMessage reply = msg.createReply();
+//					reply.addReceiver(msg.getSender());
 					// The requested book is NOT available for sale.
 					reply.setContent("Seller: " + title);
 					reply.setContentObject(mainAgent.getAuctionDescriptions());
@@ -42,9 +43,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 					myAgent.send(reply);
 					
 				} else {
-					
-					AuctionDescription auctionDescription = (AuctionDescription) msg
-							.getContentObject();
+					AuctionDescription auctionDescription = (AuctionDescription) msg.getContentObject();
 					AID auctioneer = msg.getSender();
 					String auctionName = "Auction1" + Math.random() ;//+ msg.getSender();
 					try {
@@ -53,35 +52,27 @@ public class ReceiveRequest extends CyclicBehaviour {
 						AgentContainer container = (AgentContainer)myAgent.getContainerController(); // get a container controller for creating new agents
 						t1 = container.createNewAgent(auctionName, "ifi.auction.agent.Auction", null);
 						t1.start();
-												
 						//send un message to t1
 						ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 						try {
 							AID newAuction = new AID(auctionName, AID.ISLOCALNAME);
-							System.out.println(newAuction.getName());
 							auctionDescription.setAuction(newAuction);
 							cfp.setContentObject(auctionDescription);
 //							cfp.setConversationId(Constant.ADD_AUCTION);	
 							cfp.addReceiver(newAuction);
-//							mainAgent.getAuctionDescriptions().put(newAuction, auctionDescription);
+							mainAgent.getAuctionDescriptions().put(newAuction, auctionDescription);
 //							System.out.println();				
-//							//cfp.setReplyWith("cfp" + System.currentTimeMillis());
-//							myAgent.send(cfp);
-//							System.out.println("Send ...asdfsadfd");
+							System.out.println("Main ReceiveRequest:"+newAuction.getName());
+							myAgent.send(cfp);
+							System.out.println("Main ReceiveRequest: Send to Auction cree");
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}			
-						
-						
 						System.out.println(myAgent.getLocalName()+" CREATED AND STARTED NEW Agent:" + auctionName + " ON CONTAINER "+container.getContainerName());
 					} catch (Exception any) {
 						any.printStackTrace();
 					}
-
-					
-					System.out.println("receive message about product : "
-							+ auctionDescription.getProductName());
 				}
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
@@ -94,5 +85,4 @@ public class ReceiveRequest extends CyclicBehaviour {
 			block();
 		}
 	}
-
 }
