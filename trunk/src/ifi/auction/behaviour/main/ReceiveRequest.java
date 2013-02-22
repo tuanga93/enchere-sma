@@ -37,7 +37,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 					ACLMessage reply = msg.createReply();
 //					reply.addReceiver(msg.getSender());
 					// The requested book is NOT available for sale.
-					reply.setContent("Seller: " + title);
+					//reply.setContent("Seller: " + title);
 					reply.setContentObject(mainAgent.getAuctionDescriptions());
 					System.out.println(reply.getContent());
 					myAgent.send(reply);
@@ -45,33 +45,37 @@ public class ReceiveRequest extends CyclicBehaviour {
 				} else {
 					AuctionDescription auctionDescription = (AuctionDescription) msg.getContentObject();
 					AID auctioneer = msg.getSender();
-					String auctionName = "Auction1" + Math.random() ;//+ msg.getSender();
-					try {
-						System.out.println("Auction creation hello");
-						// create agent t1 on the same container of the creator agent
-						AgentContainer container = (AgentContainer)myAgent.getContainerController(); // get a container controller for creating new agents
-						t1 = container.createNewAgent(auctionName, "ifi.auction.agent.Auction", null);
-						t1.start();
-						//send un message to t1
-						ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+					if(mainAgent.getAuctionDescriptions().get(auctioneer) != null){
+						mainAgent.getAuctionDescriptions().put(auctioneer, auctionDescription);
+					}else{
+						String auctionName = "Auction1" + Math.random() ;//+ msg.getSender();
 						try {
-							AID newAuction = new AID(auctionName, AID.ISLOCALNAME);
-							auctionDescription.setAuction(newAuction);
-							cfp.setContentObject(auctionDescription);
-//							cfp.setConversationId(Constant.ADD_AUCTION);	
-							cfp.addReceiver(newAuction);
-							mainAgent.getAuctionDescriptions().put(newAuction, auctionDescription);
-//							System.out.println();				
-							System.out.println("Main ReceiveRequest:"+newAuction.getName());
-							myAgent.send(cfp);
-							System.out.println("Main ReceiveRequest: Send to Auction cree");
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}			
-						System.out.println(myAgent.getLocalName()+" CREATED AND STARTED NEW Agent:" + auctionName + " ON CONTAINER "+container.getContainerName());
-					} catch (Exception any) {
-						any.printStackTrace();
+							System.out.println("Auction creation hello");
+							// create agent t1 on the same container of the creator agent
+							AgentContainer container = (AgentContainer)myAgent.getContainerController(); // get a container controller for creating new agents
+							t1 = container.createNewAgent(auctionName, "ifi.auction.agent.Auction", null);
+							t1.start();
+							//send un message to t1
+							ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+							try {
+								AID newAuction = new AID(auctionName, AID.ISLOCALNAME);
+								auctionDescription.setAuction(newAuction);
+								cfp.setContentObject(auctionDescription);
+	//							cfp.setConversationId(Constant.ADD_AUCTION);	
+								cfp.addReceiver(newAuction);
+								mainAgent.getAuctionDescriptions().put(newAuction, auctionDescription);
+	//							System.out.println();				
+								System.out.println("Main ReceiveRequest:"+newAuction.getName());
+								myAgent.send(cfp);
+								System.out.println("Main ReceiveRequest: Send to Auction cree");
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}			
+							System.out.println(myAgent.getLocalName()+" CREATED AND STARTED NEW Agent:" + auctionName + " ON CONTAINER "+container.getContainerName());
+						} catch (Exception any) {
+							any.printStackTrace();
+						}
 					}
 				}
 			} catch (UnreadableException e) {
