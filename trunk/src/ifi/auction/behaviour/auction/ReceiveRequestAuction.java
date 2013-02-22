@@ -37,12 +37,16 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 					myAgent.addBehaviour(new SendAuctionInfor(auctionDescription));
 					
 				} else {
-					//add auction
 					auctionDescription = (AuctionDescription) msg.getContentObject();
-					auctionAgent.setAuctionDescription(auctionDescription);
-					auctionAgent.getBidders().add(msg.getSender());
-					//notification
-					auctionAgent.addBehaviour(new NotifyBidders(auctionAgent.getBidders(), auctionDescription));
+					//add auction
+					if(msg.getPerformative() == ACLMessage.REQUEST){						
+						auctionAgent.setAuctionDescription(auctionDescription);
+						auctionAgent.getBidders().add(msg.getSender());
+						//notification
+						auctionAgent.addBehaviour(new NotifyBidders(auctionAgent.getBidders(), auctionDescription));
+					}else if(msg.getPerformative() == ACLMessage.CFP){
+						auctionAgent.setAuctionDescription(auctionDescription);
+					}
 				}
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
