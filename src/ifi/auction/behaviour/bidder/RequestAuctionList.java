@@ -40,7 +40,7 @@ public class RequestAuctionList extends OneShotBehaviour {
 					cfp.addReceiver(mainAgent);
 	System.out.println(mainAgent);				
 					myAgent.send(cfp);
-					System.out.println("Send to main agent...");
+	System.out.println("Bidder: Send to main agent...");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
