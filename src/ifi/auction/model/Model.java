@@ -64,6 +64,10 @@ public class Model extends AbstractTableModel{
         return names[col];
     }
 
+    public AuctionDescription getValueAt(int row){
+    	return auctionDescriptions.get(row);
+    }
+    
 	public List<AuctionDescription> getAuctionDescriptions() {
 		return auctionDescriptions;
 	}

@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AuctioneerGui extends JFrame {
+public class AddAuctioneerGui extends JPanel {
 	
 	private static final int WIDTH_OF_TEXT = 50;
 	
@@ -33,11 +33,11 @@ public class AuctioneerGui extends JFrame {
 	
 	private static final String LBL_ADD = "Ajouter";
 	
-	private JTextField txtName = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtPrice = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtMinStep = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtExpire = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtDescription = new JTextField(WIDTH_OF_TEXT);
+	public JTextField txtName = new JTextField(WIDTH_OF_TEXT);
+	public JTextField txtPrice = new JTextField(WIDTH_OF_TEXT);
+	public JTextField txtMinStep = new JTextField(WIDTH_OF_TEXT);
+	public JTextField txtExpire = new JTextField(WIDTH_OF_TEXT);
+	public JTextField txtDescription = new JTextField(WIDTH_OF_TEXT);
 	
 	private JLabel lblName = new JLabel(LBL_NAME);
 	private JLabel lblPrice = new JLabel(LBL_UNIT_PRICE);
@@ -46,8 +46,7 @@ public class AuctioneerGui extends JFrame {
 	private JLabel lblDescription = new JLabel(LBL_DESCRIPTION);
 	
 	private Auctioneer auctioneer;
-	public AuctioneerGui(Auctioneer a){
-		super(a.getLocalName());
+	public AddAuctioneerGui(Auctioneer a){		
 		
 		auctioneer = a;
 		
@@ -66,7 +65,7 @@ public class AuctioneerGui extends JFrame {
         layoutHelper.addLabel(lblDescription, p);
         layoutHelper.addTextField(txtDescription, p);
 
-		getContentPane().add(p, BorderLayout.CENTER);
+		add(p, BorderLayout.CENTER);
 		
 		JButton addButton = new JButton(LBL_ADD);
 		addButton.addActionListener( new ActionListener() {
@@ -86,30 +85,30 @@ public class AuctioneerGui extends JFrame {
 					auctioneer.addAuction(auction);
 				}
 				catch (Exception e) {
-					JOptionPane.showMessageDialog(AuctioneerGui.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+					JOptionPane.showMessageDialog(AddAuctioneerGui.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
 				}
 			}
 		} );
-		p = new JPanel();
-		p.add(addButton);
-		getContentPane().add(p, BorderLayout.SOUTH);
+//		p = new JPanel();
+//		p.add(addButton);
+//		add(p, BorderLayout.SOUTH);
 		
 		// Make the agent terminate when the user closes 
 		// the GUI using the button on the upper right corner	
-		addWindowListener(new	WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				auctioneer.doDelete();
-			}
-		} );
-		
-		setResizable(false);		
+//		addWindowListener(new	WindowAdapter() {
+//			public void windowClosing(WindowEvent e) {
+//				auctioneer.doDelete();
+//			}
+//		} );
+//		
+//		setResizable(false);		
 	}
-	public void showGui() {
-		pack();
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int centerX = (int)screenSize.getWidth() / 2;
-		int centerY = (int)screenSize.getHeight() / 2;
-		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
-		super.setVisible(true);
-	}
+//	public void showGui() {
+//		pack();
+//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//		int centerX = (int)screenSize.getWidth() / 2;
+//		int centerY = (int)screenSize.getHeight() / 2;
+//		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
+//		super.setVisible(true);
+//	}
 }
