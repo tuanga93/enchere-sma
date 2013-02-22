@@ -25,19 +25,20 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		// Receive request from Client(bidder or auctionner)
-		System.out.println("Auction: Receiving...");
+		System.out.println("Auction ReceiveRequestAuction: Receiving...");
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
 			try {
 				String content = msg.getContent();
 				System.out.println(content);
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
-					System.out.println("Auction: Receive list request, I will send information");
+					System.out.println("Auction ReceiveRequestAuction: Receive list request, I will send information");
 					// Send auction infor to Main agent
 					myAgent.addBehaviour(new SendAuctionInfor(auctionDescription));
 					
 				} else {
 					auctionDescription = (AuctionDescription) msg.getContentObject();
+					System.out.println("Price :" + auctionDescription.getCurrentPrice());
 					//add auction
 					if(msg.getPerformative() == ACLMessage.REQUEST){						
 						auctionAgent.setAuctionDescription(auctionDescription);
