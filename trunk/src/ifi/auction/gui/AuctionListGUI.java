@@ -136,9 +136,10 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 	public void showGui() {
 		pack();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize((int)Math.round(screenSize.width*0.8), (int)Math.round(screenSize.height*0.8));
 		int centerX = (int)screenSize.getWidth() / 2;
 		int centerY = (int)screenSize.getHeight() / 2;
-		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);
+		setLocation(centerX - getWidth() / 2, centerY - getHeight() / 2);		
 		super.setVisible(true);
 	}
 	@Override
