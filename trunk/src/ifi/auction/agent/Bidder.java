@@ -7,6 +7,7 @@ import ifi.auction.AuctionDescription;
 import ifi.auction.behaviour.bidder.*;
 import ifi.auction.gui.AuctioneerGui;
 import ifi.auction.gui.AuctionListGUI;
+import ifi.auction.gui.MyAuctionListGUI;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -18,11 +19,11 @@ public class Bidder extends CommonAuctionAgent{
 	private static final String BIDDER_NAME = "BIDDER";
 	
 //	private AID[] recepteurAgents;
-	private AuctionListGUI gui;
+	private MyAuctionListGUI gui;
 	protected void setup(){
 		
-		//gui = new ProductList(this);
-		//gui.showGui();
+		gui = new MyAuctionListGUI(this);
+		gui.showGui();
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		
