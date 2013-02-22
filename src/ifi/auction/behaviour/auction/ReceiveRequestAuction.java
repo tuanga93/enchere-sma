@@ -45,6 +45,7 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 						auctionAgent.getBidders().add(msg.getSender());
 						//notification
 						auctionAgent.addBehaviour(new NotifyBidders(auctionAgent.getBidders(), auctionDescription));
+						auctionAgent.addBehaviour(new NotifyMain(auctionDescription));
 					}else if(msg.getPerformative() == ACLMessage.CFP){
 						auctionAgent.setAuctionDescription(auctionDescription);
 					}
