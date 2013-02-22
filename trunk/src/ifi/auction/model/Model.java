@@ -12,6 +12,14 @@ import javax.swing.table.AbstractTableModel;
 
 public class Model extends AbstractTableModel{
 	private List<AuctionDescription> auctionDescriptions = new ArrayList<AuctionDescription>();
+	private static final String[] names = {"Nom du produit", 
+											"Prix initalisé", 
+											"Pas minimum,", 
+											"Prix actuel", 
+											"Enchérisseur actuel",
+											"Date limitée",
+											"Description"
+											};
 	public Model(List<AuctionDescription> auctionDescriptions){
 		this.auctionDescriptions = auctionDescriptions;
 	}
@@ -19,7 +27,7 @@ public class Model extends AbstractTableModel{
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return names.length;
 	}
 	@Override
 	public int getRowCount() {
@@ -34,7 +42,7 @@ public class Model extends AbstractTableModel{
 		case 0:
 			return auctionDescription.getProductName();
 		case 1:
-			return auctionDescription.getCurrentPrice();
+			return auctionDescription.getInitialPrice();
 		case 2:
 			return auctionDescription.getMinStep();
 		case 3:
@@ -48,7 +56,21 @@ public class Model extends AbstractTableModel{
 			
 		default:
 			return "";
-		} 
-		
+		}		
 	}
+	
+    @Override
+    public String getColumnName(int col) {
+        return names[col];
+    }
+
+	public List<AuctionDescription> getAuctionDescriptions() {
+		return auctionDescriptions;
+	}
+
+	public void setAuctionDescriptions(List<AuctionDescription> auctionDescriptions) {		
+		this.auctionDescriptions = auctionDescriptions;
+	}
+    
+    
 }
