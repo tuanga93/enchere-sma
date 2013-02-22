@@ -28,7 +28,7 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 				String content = msg.getContent();
 				System.out.println(content);
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
-					System.out.println("Receive list request, I will send information");
+					System.out.println("Auction: Receive list request, I will send information");
 					// Send auction infor to Main agent
 					myAgent.addBehaviour(new SendAuctionInfor(auctionDescription));
 					
