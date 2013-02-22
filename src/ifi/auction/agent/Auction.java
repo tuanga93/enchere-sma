@@ -1,8 +1,12 @@
 package ifi.auction.agent;
 
+import java.util.List;
+import java.util.Vector;
+
 import ifi.auction.behaviour.auction.*;
 import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -11,8 +15,9 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Auction extends Agent {
 	private AuctionDescription auctionDescription = null;
-	
+	private List<AID> bidders = new Vector<AID>();
 	protected void setup() {
+		
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 
@@ -28,7 +33,20 @@ public class Auction extends Agent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		addBehaviour(new ReceiveRequestAuction(auctionDescription));
+		addBehaviour(new ReceiveRequestAuction(this, auctionDescription));
 //		addBehaviour(new SendAuctionInfor());
 	}
+	public List<AID> getBidders() {
+		return bidders;
+	}
+	public void setBidders(List<AID> bidders) {
+		this.bidders = bidders;
+	}
+	public AuctionDescription getAuctionDescription() {
+		return auctionDescription;
+	}
+	public void setAuctionDescription(AuctionDescription auctionDescription) {
+		this.auctionDescription = auctionDescription;
+	}	
+	
 }
