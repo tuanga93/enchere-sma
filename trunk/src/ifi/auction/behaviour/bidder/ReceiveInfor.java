@@ -32,8 +32,7 @@ public class ReceiveInfor extends CyclicBehaviour{
 	public void action() {
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
-			try {
-				System.out.println("Bidder ReceiveInfor: receive message from " + msg.getSender().getName());
+			try {				
 				Object content = msg.getContentObject();
 				if(content instanceof AuctionDescription){
 					//add auction
@@ -52,11 +51,13 @@ public class ReceiveInfor extends CyclicBehaviour{
 							//JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
 						}			     
 					}
-				}else if(content instanceof Hashtable){
+				}else {
+System.out.println("ReceiveInfor: receive Hashtable");					
 					Hashtable<AID, AuctionDescription> mapAuctionDescriptions = (Hashtable<AID, AuctionDescription>)content;
 					if(bidder.getGui() == null){
 						bidder.setGui(new MyAuctionListGUI(bidder));					
 					}
+System.out.println(mapAuctionDescriptions.values());					
 					List<AuctionDescription> auctionDescriptions = new ArrayList<AuctionDescription>(mapAuctionDescriptions.values()) ;
 					bidder.getGui().getModel().setAuctionDescriptions(auctionDescriptions);
 				}

@@ -84,28 +84,30 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 		addButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					AddAuctioneerGui addAuctioneerGui = new AddAuctioneerGui();
-					 int result = JOptionPane.showConfirmDialog(null, addAuctioneerGui, 
-				               "Ajouter un enchère", JOptionPane.OK_CANCEL_OPTION);
-				      if (result == JOptionPane.OK_OPTION) {
-							try {					
-								double minStep = Double.parseDouble(addAuctioneerGui.txtMinStep.getText());
-								String productName = addAuctioneerGui.txtName.getText();
-								double initialPrice = Double.parseDouble(addAuctioneerGui.txtPrice.getText());
-								String expire = addAuctioneerGui.txtExpire.getText();
-								String description = addAuctioneerGui.txtDescription.getText();
-								AuctionDescription auction = new AuctionDescription(productName, initialPrice, minStep, expire, description);
-//								String title = titleField.getText().trim();
-//								String price = priceField.getText().trim();
-//								//auctioneer.updateCatalogue(title, Integer.parseInt(price));
-//								titleField.setText("");
-//								priceField.setText("");
-								auctioneer.addAuction(auction);				    	  
-							}
-							catch (Exception e) {
-								JOptionPane.showMessageDialog(AuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-							}
-				      }
+//					AddAuctioneerGui addAuctioneerGui = new AddAuctioneerGui();
+//					 int result = JOptionPane.showConfirmDialog(null, addAuctioneerGui, 
+//				               "Ajouter un enchère", JOptionPane.OK_CANCEL_OPTION);
+//				      if (result == JOptionPane.OK_OPTION) {
+//							try {					
+//								double minStep = Double.parseDouble(addAuctioneerGui.txtMinStep.getText());
+//								String productName = addAuctioneerGui.txtName.getText();
+//								double initialPrice = Double.parseDouble(addAuctioneerGui.txtPrice.getText());
+//								String expire = addAuctioneerGui.txtExpire.getText();
+//								String description = addAuctioneerGui.txtDescription.getText();
+//								AuctionDescription auction = new AuctionDescription(productName, initialPrice, minStep, expire, description);
+////								String title = titleField.getText().trim();
+////								String price = priceField.getText().trim();
+////								//auctioneer.updateCatalogue(title, Integer.parseInt(price));
+////								titleField.setText("");
+////								priceField.setText("");
+//								auctioneer.addAuction(auction);				    	  
+//							}
+//							catch (Exception e) {
+//								JOptionPane.showMessageDialog(AuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+//							}
+//				      }
+					AuctionDescription au = new AuctionDescription("productName", 100, 1, "1111", "description");
+					auctioneer.addAuction(au);
 				}
 				catch (Exception e) {
 					JOptionPane.showMessageDialog(AuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
