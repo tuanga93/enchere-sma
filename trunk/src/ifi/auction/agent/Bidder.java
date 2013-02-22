@@ -37,7 +37,7 @@ public class Bidder extends CommonAuctionAgent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+System.out.println("I'm new bidder in the system");
 		addBehaviour(new RequestAuctionList());
 //		addBehaviour(new Reponse());
 	}
