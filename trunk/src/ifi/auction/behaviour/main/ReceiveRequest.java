@@ -31,7 +31,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
 					
 					///---------------------------------
-					System.out.println("reques list of auction");
+					System.out.println("request list of auction");
 					ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 					try {
 						cfp.setContent(Constant.GET_AUCTION_LIST);
