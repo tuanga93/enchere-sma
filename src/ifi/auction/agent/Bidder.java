@@ -1,5 +1,6 @@
 package ifi.auction.agent;
 
+import ifi.auction.behaviour.bidder.*;
 import ifi.auction.gui.AuctioneerGui;
 import ifi.auction.gui.ProductList;
 import jade.core.Agent;
@@ -16,8 +17,8 @@ public class Bidder extends Agent{
 	private ProductList gui;
 	protected void setup(){
 		
-		gui = new ProductList(this);
-		gui.showGui();
+		//gui = new ProductList(this);
+		//gui.showGui();
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		
@@ -28,20 +29,12 @@ public class Bidder extends Agent{
 		
 		try {
 			DFService.register(this, dfd);		
-			DFAgentDescription template = new DFAgentDescription();
-			DFAgentDescription[] results = DFService.search(this, template);
-			ServiceDescription serviceDescription = new ServiceDescription();
-			serviceDescription.setType("Recepteur");
-			template.addServices(serviceDescription);			
-//			recepteurAgents = new AID[results.length];
-//			for (int i = 0; i < results.length; ++i) {
-//				recepteurAgents[i] = results[i].getName();
-//			}			
 		} catch (FIPAException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		addBehaviour(new RequestPerformer());
+
+		addBehaviour(new RequestAuctionList());
 //		addBehaviour(new Reponse());
 	}
 
