@@ -12,7 +12,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
-public class RequestAuctionList extends CyclicBehaviour {
+public class RequestAuctionList extends OneShotBehaviour {
 		private static final int REPLY_TIMEOUT = 1000;
 		private AID mainAgent;
 		

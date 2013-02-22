@@ -1,5 +1,6 @@
 package ifi.auction.behaviour.auction;
 
+import ifi.auction.behaviour.auction.*;
 import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
 import jade.core.AID;
@@ -11,6 +12,11 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 
 	private AuctionDescription auctionDescription = null;
 	
+	public ReceiveRequestAuction(AuctionDescription auctionDes) {
+		// TODO Auto-generated constructor stub
+		auctionDescription= auctionDes;
+	}
+
 	@Override
 	public void action() {
 		// TODO Auto-generated method stub
@@ -22,7 +28,10 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 				String content = msg.getContent();
 				System.out.println(content);
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
-					System.out.println("Receive list request, I will send list");
+					System.out.println("Receive list request, I will send information");
+					// Send auction infor to Main agent
+					myAgent.addBehaviour(new SendAuctionInfor(auctionDescription));
+					
 				} else {
 					auctionDescription = (AuctionDescription) msg
 							.getContentObject();
