@@ -1,5 +1,6 @@
 package ifi.auction.agent;
 
+import ifi.auction.behaviour.auction.*;
 import ifi.auction.Constant;
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -24,5 +25,6 @@ public class Auction extends Agent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		addBehaviour(new ReceiveRequestAuction());
 	}
 }
