@@ -10,11 +10,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import ifi.auction.AuctionDescription;
 import ifi.auction.agent.Auctioneer;
 import ifi.auction.agent.CommonAuctionAgent;
 import ifi.auction.model.Model;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,42 +25,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class AuctionListGUI extends JFrame implements ActionListener{
 	
-	private static final int WIDTH_OF_TEXT = 50;
-	
-	private static final String LBL_NAME = "Nom de produit";
-	private static final String LBL_UNIT_PRICE = "Prix du produit";
-	private static final String LBL_MIN_STEP = "Pas minimum";
-	private static final String LBL_EXPIRE = "Temps expirant";
-	private static final String LBL_DESCRIPTION = "Description";
-	
-	
 	private static final String LBL_ADD = "Ajouter";
-	
-	private JTextField txtName = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtPrice = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtMinStep = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtExpire = new JTextField(WIDTH_OF_TEXT);
-	private JTextField txtDescription = new JTextField(WIDTH_OF_TEXT);
-	
-	private JLabel lblName = new JLabel(LBL_NAME);
-	private JLabel lblPrice = new JLabel(LBL_UNIT_PRICE);
-	private JLabel lblMinStep = new JLabel(LBL_MIN_STEP);
-	private JLabel lblExpire = new JLabel(LBL_EXPIRE);
-	private JLabel lblDescription = new JLabel(LBL_DESCRIPTION);
-	
-	private CommonAuctionAgent bidder;
+		
+	private Auctioneer bidder;
 	
 	private	JTable		table;
+	private Model model;
 	private	JScrollPane scrollPane;
 
-	public AuctionListGUI(CommonAuctionAgent a){
+	public AuctionListGUI(Auctioneer a){
 		super(a.getLocalName());
 		
 		bidder = a;
-		Model model = new Model(a.getAuctionList());
+		model = new Model(a.getAuctionList());
         table = new JTable(model);
         
         
@@ -70,23 +54,32 @@ public class AuctionListGUI extends JFrame implements ActionListener{
         
         
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListSelectionModel rowSM = table.getSelectionModel();
+        rowSM.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                //Ignore extra messages.
+                    if (e.getValueIsAdjusting()) return;
+ 
+                    ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+                    if (lsm.isSelectionEmpty()) {
+                        System.out.println("No rows are selected.");
+                } else {
+                    int selectedRow = lsm.getMinSelectionIndex();
+                    AuctionDescription auctionDescription = AuctionListGUI.this.getModel().getValueAt(selectedRow);
+                    System.out.println(auctionDescription.getAuction());
+//                    Control control =  ViewListPerson.this.getController();
+//                    Person person = control.getValueAt(selectedRow);
+//                    ViewListPerson.this.setFormData(person);
+//                    ViewListPerson.this.setCurrentPerson(selectedRow);
+//                    System.out.println("Row " + selectedRow
+//                                       + " is now selected.");
+                }
+            }
+        });
 		
 		
 		JPanel p = new JPanel();
 		
-		p.setLayout(new GridBagLayout());	
-        LayoutHelper layoutHelper = new LayoutHelper();
-        
-        layoutHelper.addLabel(lblName, p);
-        layoutHelper.addTextField(txtName, p);
-        layoutHelper.addLabel(lblPrice, p);
-        layoutHelper.addTextField(txtPrice, p);
-        layoutHelper.addLabel(lblMinStep, p);
-        layoutHelper.addTextField(txtMinStep, p);
-        layoutHelper.addLabel(lblExpire, p);
-        layoutHelper.addTextField(txtExpire, p);
-        layoutHelper.addLabel(lblDescription, p);
-        layoutHelper.addTextField(txtDescription, p);
         JPanel panelListAuction = new JPanel(new GridLayout());
         panelListAuction.add(scrollPane);
 		//getContentPane().add(p, BorderLayout.CENTER);
@@ -96,11 +89,28 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 		addButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-//					String title = titleField.getText().trim();
-//					String price = priceField.getText().trim();
-//					//auctioneer.updateCatalogue(title, Integer.parseInt(price));
-//					titleField.setText("");
-//					priceField.setText("");
+					AddAuctioneerGui addAuctioneerGui = new AddAuctioneerGui(bidder);
+					 int result = JOptionPane.showConfirmDialog(null, addAuctioneerGui, 
+				               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+				      if (result == JOptionPane.OK_OPTION) {
+							try {					
+								double minStep = Double.parseDouble(addAuctioneerGui.txtMinStep.getText());
+								String productName = addAuctioneerGui.txtName.getText();
+								double initialPrice = Double.parseDouble(addAuctioneerGui.txtPrice.getText());
+								String expire = addAuctioneerGui.txtExpire.getText();
+								String description = addAuctioneerGui.txtDescription.getText();
+								AuctionDescription auction = new AuctionDescription(productName, initialPrice, minStep, expire, description);
+//								String title = titleField.getText().trim();
+//								String price = priceField.getText().trim();
+//								//auctioneer.updateCatalogue(title, Integer.parseInt(price));
+//								titleField.setText("");
+//								priceField.setText("");
+								bidder.addAuction(auction);				    	  
+							}
+							catch (Exception e) {
+								JOptionPane.showMessageDialog(AuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							}
+				      }
 				}
 				catch (Exception e) {
 					JOptionPane.showMessageDialog(AuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
@@ -135,5 +145,12 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
-	}		
+	}
+	public Model getModel() {
+		return model;
+	}
+	public void setModel(Model model) {
+		this.model = model;
+	}	
+	
 }

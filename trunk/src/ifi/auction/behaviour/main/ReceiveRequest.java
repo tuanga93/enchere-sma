@@ -52,7 +52,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 					AuctionDescription auction = (AuctionDescription) msg
 							.getContentObject();
 					AID auctioneer = msg.getSender();
-					String auctionName = "Auction1" ;//+ msg.getSender();
+					String auctionName = "Auction1" + Math.random() ;//+ msg.getSender();
 					try {
 						System.out.println("hello");
 						// create agent t1 on the same container of the creator agent
