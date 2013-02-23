@@ -41,6 +41,10 @@ public class Main extends Agent {
 	public Hashtable<AID, AuctionDescription> getAuctionDescriptions() {
 		return auctionDescriptions;
 	}
+	public Hashtable<AID, AuctionDescription> getAuctionDescriptions(AID au) {
+		
+		return auctionDescriptions;
+	}
 	public void setAuctionDescriptions(
 			Hashtable<AID, AuctionDescription> auctionDescriptions) {
 		this.auctionDescriptions = auctionDescriptions;

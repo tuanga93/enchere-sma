@@ -11,6 +11,8 @@ import java.awt.event.WindowEvent;
 
 import ifi.auction.AuctionDescription;
 import ifi.auction.agent.Auctioneer;
+import ifi.auction.behaviour.auctioneer.ListAuctionRequest;
+import ifi.auction.behaviour.bidder.RequestAuctionList;
 import ifi.auction.model.Model;
 
 import javax.swing.JButton;
@@ -114,8 +116,18 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 				}
 			}
 		} );
+		JButton refreshButton = new JButton("Rafraîchir");
+		refreshButton.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				auctioneer.addBehaviour(new ListAuctionRequest());
+			}			
+		});
+		
 		p = new JPanel();
 		p.add(addButton);
+		//thanhkm
+		p.add(refreshButton);
+		
 		getContentPane().add(p, BorderLayout.SOUTH);
 		
 		// Make the agent terminate when the user closes 

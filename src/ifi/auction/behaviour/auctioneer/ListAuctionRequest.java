@@ -18,9 +18,9 @@ public class ListAuctionRequest extends Behaviour {
 	
 	private AID mainAgent;
 	
-	public ListAuctionRequest(AuctionDescription a){
-		auction = a;
-	}
+//	public ListAuctionRequest(AuctionDescription a){
+//		auction = a;
+//	}
 
 	@Override
 	public void action() {
