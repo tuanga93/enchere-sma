@@ -20,6 +20,7 @@ public class SendAuctionRequest extends Behaviour {
 	
 	public SendAuctionRequest(AuctionDescription a){
 		auction = a;
+		System.out.println("Auctionner SendAuctionRequest:" +a.getAuctionner().getName());
 	}
 
 	@Override
@@ -40,6 +41,7 @@ public class SendAuctionRequest extends Behaviour {
 			mainAgent = results[0].getName();
 			ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 			try {
+				
 				cfp.setContentObject(auction);
 				cfp.setConversationId(Constant.ADD_AUCTION);				
 				cfp.addReceiver(mainAgent);
