@@ -47,6 +47,7 @@ public class TerminateAuction extends TickerBehaviour {
 		}	
 		
 		if(expireTime >= System.currentTimeMillis()){
+System.out.println("Sending terminate inform");			
 			DFAgentDescription template = new DFAgentDescription();
 			ServiceDescription serviceDescription = new ServiceDescription();
 			serviceDescription.setType(Constant.MAIN_TYPE);		
