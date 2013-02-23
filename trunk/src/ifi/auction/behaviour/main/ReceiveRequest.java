@@ -33,16 +33,28 @@ public class ReceiveRequest extends CyclicBehaviour {
 				if (content.equals(Constant.GET_AUCTION_LIST)) {
 					// Message received. Process it
 					System.out.println("Main ReceiveRequest:"+content +"Receive getAuction list");
-					String title = msg.getContent();
+					System.out.println("Main ReceiveRequest:Get sendername: ----"+msg.getSender().getName());
+
+//					String title = msg.getContent();
 					ACLMessage reply = msg.createReply();
 //					reply.addReceiver(msg.getSender());
 					// The requested book is NOT available for sale.
 					//reply.setContent("Seller: " + title);
 					reply.setContentObject(mainAgent.getAuctionDescriptions());
-					System.out.println(reply.getContent());
+					System.out.println("$$$$$$$$$"+mainAgent.getAuctionDescriptions().keys());
+					//System.out.println(reply.getContent());
 					myAgent.send(reply);
 					
-				} else {
+				}else if (content.equals(Constant.GET_AUCTION_LIST_AUCTIONNER)){
+					// Message received. Process it
+					System.out.println("Main ReceiveRequest:"+content +"Receive getAuction list");
+					System.out.println("Main ReceiveRequest:Get sendername: ----"+msg.getSender().getName());
+
+					ACLMessage reply = msg.createReply();
+					reply.setContentObject(mainAgent.getAuctionDescriptions());
+					myAgent.send(reply);
+				}
+				else {
 					AuctionDescription auctionDescription = (AuctionDescription) msg.getContentObject();
 					AID auctioneer = msg.getSender();
 					if(mainAgent.getAuctionDescriptions().get(auctioneer) != null){
@@ -67,6 +79,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 	//							System.out.println();				
 								System.out.println("Main ReceiveRequest:"+newAuction.getName());
 								myAgent.send(cfp);
+								System.out.println("Main ReceiveRequest:"+auctionDescription.getAuctionner());
 								System.out.println("Main ReceiveRequest: Send to Auction cree");
 							} catch (IOException e) {
 								// TODO Auto-generated catch block

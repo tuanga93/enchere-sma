@@ -14,6 +14,8 @@ public class AuctionDescription implements Concept, Serializable{
 	private String expire;
 	private String description;
 	private AID auction;
+	//Auctionner
+	private AID auctionner;
 	//private Set<Good> goods = null;
 	public AuctionDescription(String productName, double initialPrice, double minStep, 
 			String expire, String description) {
@@ -73,5 +75,12 @@ public class AuctionDescription implements Concept, Serializable{
 	}
 	public void setAuction(AID auction) {
 		this.auction = auction;
+	}	
+	//Auctionner
+	public AID getAuctionner() {
+		return auctionner;
+	}
+	public void setAuctionner(AID auctionner) {
+		this.auctionner = auctionner;
 	}	
 }

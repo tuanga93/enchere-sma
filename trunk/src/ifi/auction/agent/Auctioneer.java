@@ -46,6 +46,7 @@ public class Auctioneer extends CommonAuctionAgent{
 		
 	}
 	public void addAuction(AuctionDescription au){
+		au.setAuctionner(getAID());
 		addBehaviour(new SendAuctionRequest(au));		
 	}
 	public List<AuctionDescription> getAuctionList(){
