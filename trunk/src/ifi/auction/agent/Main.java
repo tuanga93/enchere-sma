@@ -1,6 +1,8 @@
 package ifi.auction.agent;
 
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
@@ -41,11 +43,18 @@ public class Main extends Agent {
 	public Hashtable<AID, AuctionDescription> getAuctionDescriptions() {
 		return auctionDescriptions;
 	}
-	public Hashtable<AID, AuctionDescription> getAuctionDescriptions(AID au) {
-		Hashtable<AID, AuctionDescription> auctionDescriptionsAID = new Hashtable<AID, AuctionDescription>();
-		
-		auctionDescriptionsAID = auctionDescriptions;
-		return auctionDescriptionsAID;
+	public Hashtable<AID, AuctionDescription> getAuctionDescriptions(AID au) {		
+		Set<AID> aids = auctionDescriptions.keySet();
+		Iterator<AID> it = aids.iterator();
+		Hashtable<AID, AuctionDescription> rs = new Hashtable<AID, AuctionDescription>();
+		while(it.hasNext()){
+			AID aid = it.next();
+			AuctionDescription auctionDescription = auctionDescriptions.get(aid);
+			if(auctionDescription.getAuctionner().equals(au)){
+				rs.put(aid, auctionDescription);
+			}
+		}		
+		return rs;
 	}
 	public void setAuctionDescriptions(
 			Hashtable<AID, AuctionDescription> auctionDescriptions) {
