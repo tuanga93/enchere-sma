@@ -44,7 +44,7 @@ System.out.println("Bidder ReceiveInfor: Receive message from "+ msg.getSender()
 						}
 					} else{
 						//Auction
-System.out.println("+++Bidder ReceiveInfor: Update AuctionDescription");
+System.out.println(myAgent.getAID().getName()+"+++Bidder ReceiveInfor: Update AuctionDescription");
 						BidGui bidGui = new BidGui(auctionDescription);
 						int result = JOptionPane.showConfirmDialog(null, bidGui, 
 					               "Faire un enchère", JOptionPane.OK_CANCEL_OPTION);
