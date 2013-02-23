@@ -49,5 +49,13 @@ public class Auction extends Agent {
 	public void setAuctionDescription(AuctionDescription auctionDescription) {
 		this.auctionDescription = auctionDescription;
 	}	
-	
+
+	// Make Agent died
+	protected void takeDown() {
+		// Printout a dismissal message
+		System.out
+				.println("Auction Agent: "
+						+ getAID().getName()
+						+ " terminating.++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
 }
