@@ -135,7 +135,7 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 		p = new JPanel();
 		p.add(addButton);
 		//thanhkm
-		p.add(refreshButton);
+		//p.add(refreshButton);
 		
 		getContentPane().add(p, BorderLayout.SOUTH);
 		
