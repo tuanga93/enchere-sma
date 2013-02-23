@@ -51,8 +51,9 @@ public class ReceiveRequest extends CyclicBehaviour {
 					System.out.println("Main ReceiveRequest:Get sendername: ----"+msg.getSender().getName());
 
 					ACLMessage reply = msg.createReply();
-					reply.setContentObject(mainAgent.getAuctionDescriptions());
+					reply.setContentObject(mainAgent.getAuctionDescriptions(msg.getSender()));
 					myAgent.send(reply);
+					System.out.println("Main ReceiveRequest: Send to " + msg.getSender().getName());
 				}
 				else {
 					AuctionDescription auctionDescription = (AuctionDescription) msg.getContentObject();
