@@ -33,8 +33,7 @@ public class Auction extends Agent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		addBehaviour(new ReceiveRequestAuction(this, auctionDescription));
-		addBehaviour(new TerminateAuction(this, bidders, auctionDescription));
+		addBehaviour(new ReceiveRequestAuction(this));		
 //		addBehaviour(new SendAuctionInfor());
 	}
 	public List<AID> getBidders() {
