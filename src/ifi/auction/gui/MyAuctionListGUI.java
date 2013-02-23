@@ -8,8 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import ifi.auction.AuctionDescription;
+import ifi.auction.Constant;
 import ifi.auction.agent.Auctioneer;
 import ifi.auction.agent.Bidder;
 import ifi.auction.behaviour.bidder.RequestAuctionList;
@@ -102,14 +105,16 @@ public class MyAuctionListGUI extends JFrame implements ActionListener{
 								double biddingPrice = Double.parseDouble(bidGui.txtBiddingPrice.getText());
 								double currentPrice = auctionDescription.getCurrentPrice();
 								double minStep = auctionDescription.getMinStep();
-System.out.println("current price %%%%%%%%%%%%%%%%%%%%" + currentPrice);
-System.out.println("bidding price %%%%%%%%%%%%%%%%%%%%" + biddingPrice);
-System.out.println("currentPrice + minStep %%%%%%%%%%%%%%%%%%%%" + (currentPrice + minStep));
-								if(currentPrice + minStep > biddingPrice){
-System.out.println("good%%%%%%%%%%%%%%%%%");									
-									JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Invalid values", "Error", JOptionPane.ERROR_MESSAGE);
+								long currentTime = System.currentTimeMillis();
+								
+								SimpleDateFormat datetimeFormatter = new SimpleDateFormat(Constant.DATE_FORMAT);
+								
+								long expireTime = datetimeFormatter.parse(auctionDescription.getExpire()).getTime();
+								if(expireTime < currentTime){
+									JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Enchère est terminé!", "Error", JOptionPane.ERROR_MESSAGE);
+								}else if(currentPrice + minStep > biddingPrice){									
+									JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Nouveau prix doit plus grand!", "Error", JOptionPane.ERROR_MESSAGE);
 								}else{
-System.out.println("bad%%%%%%%%%%%%%%%%%");									
 									auctionDescription.setCurrentPrice(biddingPrice);					
 									auctionDescription.setCurrentBidder(bidder.getAID());																	
 									bidder.bid(auctionDescription);
