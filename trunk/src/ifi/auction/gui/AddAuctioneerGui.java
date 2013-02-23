@@ -65,6 +65,7 @@ public class AddAuctioneerGui extends JPanel {
         layoutHelper.addLabel(lblExpire, p);
 		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 		Date date = new Date(System.currentTimeMillis() + 180000);
+System.out.println("AddAuctioneerGui: "+ System.currentTimeMillis() + 180000);
 		String defaultDate = datetimeFormatter.format(date);
         txtExpire.setText(defaultDate);
         layoutHelper.addTextField(txtExpire, p);

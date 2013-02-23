@@ -29,7 +29,7 @@ public class TerminateAuction extends TickerBehaviour {
 	private Auction auctionAgent = null;
 	
 	public TerminateAuction(Auction a) {		
-		super(a, 1);
+		super(a, 30000);
 		auctionAgent = a;
 	}
 
@@ -45,8 +45,10 @@ public class TerminateAuction extends TickerBehaviour {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		
-		if(expireTime >= System.currentTimeMillis()){
+System.out.println("TerminateAuction: Expiretime "+ expireTime);
+System.out.println("TerminateAuction: Currenttime"+ System.currentTimeMillis());
+		//if(expireTime >= System.currentTimeMillis()){
+		if(true){
 System.out.println("Sending terminate inform");			
 			DFAgentDescription template = new DFAgentDescription();
 			ServiceDescription serviceDescription = new ServiceDescription();
@@ -63,7 +65,8 @@ System.out.println("Sending terminate inform");
 			if(results != null && results.length > 0){
 				//mainAgent = new AID();
 				mainAgent = results[0].getName();
-			}			
+			}	
+			
 			ACLMessage inform = new ACLMessage(ACLMessage.INFORM);
 			try {
 				inform.setContentObject(auctionAgent.getAuctionDescription());
