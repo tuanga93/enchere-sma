@@ -16,6 +16,10 @@ import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
@@ -47,6 +51,22 @@ public class TerminateAuction extends TickerBehaviour {
 	@Override
 	protected void onTick() {
 		if(expireTime >= System.currentTimeMillis()){
+			DFAgentDescription template = new DFAgentDescription();
+			ServiceDescription serviceDescription = new ServiceDescription();
+			serviceDescription.setType(Constant.MAIN_TYPE);		
+			template.addServices(serviceDescription);		
+			DFAgentDescription[] results = null;
+			AID mainAgent = null;
+			try {
+				results = DFService.search(myAgent, template);
+			} catch (FIPAException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			if(results != null && results.length > 0){
+				//mainAgent = new AID();
+				mainAgent = results[0].getName();
+			}			
 			ACLMessage inform = new ACLMessage(ACLMessage.INFORM);
 			try {
 				inform.setContentObject(auctionDescription);
@@ -57,6 +77,11 @@ public class TerminateAuction extends TickerBehaviour {
 			
 			inform.addReceiver(auctionDescription.getAuctionner());
 			myAgent.send(inform);
+			
+			if(mainAgent != null){
+				inform.addReceiver(mainAgent);
+				myAgent.send(inform);
+			}
 			//notify all the bidders
 			for (AID bidder : bidders) {																						
 				inform.addReceiver(bidder);							
