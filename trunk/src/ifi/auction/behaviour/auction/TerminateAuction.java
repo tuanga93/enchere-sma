@@ -72,7 +72,8 @@ System.out.println("Sending terminate inform");
 				myAgent.send(inform);
 				
 				//notify all the bidders
-				for (AID bidder : auctionAgent.getBidders()) {																						
+				for (AID bidder : auctionAgent.getBidders()) {
+System.out.println("Send to bidder" + bidder);					
 					inform.addReceiver(bidder);							
 					myAgent.send(inform);				
 				}				
@@ -84,7 +85,8 @@ System.out.println("Sending terminate inform");
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}
+			stop();
+		}		
 	}
 
 }
