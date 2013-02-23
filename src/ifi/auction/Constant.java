@@ -16,6 +16,9 @@ public class Constant {
 	public static final String GET_AUCTION_LIST_AUCTIONNER = "getAuctionListAuctionner";
 	public static final String AUCTION_INFOR = "auctionInfor";
 	
+	public static final String AUCTION_WINNER = "winner";
+	public static final String AUCTION_TERMINATE = "terminate";
+	
 	public static final String LBL_NAME = "Nom de produit";
 	public static final String LBL_UNIT_PRICE = "Prix du produit";
 	public static final String LBL_MIN_STEP = "Pas minimum";
