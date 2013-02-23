@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ifi.auction.AuctionDescription;
+import ifi.auction.Constant;
 import ifi.auction.behaviour.bidder.*;
 import ifi.auction.gui.MyAuctionListGUI;
 import jade.domain.DFService;
@@ -12,9 +13,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class Bidder extends CommonAuctionAgent{
-	private static final String BIDDER_TYPE = "Bidder";
-	private static final String BIDDER_NAME = "BIDDER";
-	
+
 //	private AID[] recepteurAgents;
 	private MyAuctionListGUI gui;
 	protected void setup(){
@@ -25,12 +24,12 @@ public class Bidder extends CommonAuctionAgent{
 		dfd.setName(getAID());
 		
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType(BIDDER_TYPE);
-		sd.setName(BIDDER_NAME);
+		sd.setType(Constant.BIDDER_TYPE);
+		sd.setName(Constant.BIDDER_NAME);
 		//DFAgentDescription[] results = DFService.search(, dfd);
-		
+		dfd.addServices(sd);
 		try {
-			DFService.register(this, dfd);		
+			DFService.register(this, dfd);	
 		} catch (FIPAException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

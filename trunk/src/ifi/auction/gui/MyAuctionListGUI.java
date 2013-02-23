@@ -149,7 +149,7 @@ System.out.println("bad%%%%%%%%%%%%%%%%%");
 
 		p = new JPanel();
 		p.add(addButton);
-		p.add(refreshButton);
+		//p.add(refreshButton);
 		
 		getContentPane().add(p, BorderLayout.SOUTH);
 		

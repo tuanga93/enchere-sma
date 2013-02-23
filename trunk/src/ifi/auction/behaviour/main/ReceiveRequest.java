@@ -60,6 +60,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 					AID auctioneer = msg.getSender();
 					if(mainAgent.getAuctionDescriptions().get(auctioneer) != null){
 						mainAgent.getAuctionDescriptions().put(auctioneer, auctionDescription);
+						mainAgent.addBehaviour(new NotifyChange(mainAgent, auctionDescription.getAuctionner()));
 					}else{
 						String auctionName = "Auction1" + Math.random() ;//+ msg.getSender();
 						try {
@@ -82,6 +83,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 								myAgent.send(cfp);
 								System.out.println("Main ReceiveRequest:"+auctionDescription.getAuctionner());
 								System.out.println("Main ReceiveRequest: Send to Auction cree");
+								mainAgent.addBehaviour(new NotifyChange(mainAgent, auctionDescription.getAuctionner()));
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
