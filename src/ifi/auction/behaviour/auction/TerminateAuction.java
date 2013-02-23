@@ -29,14 +29,14 @@ public class TerminateAuction extends TickerBehaviour {
 	private Auction auctionAgent = null;
 	
 	public TerminateAuction(Auction a) {		
-		super(a, 30000);
+		super(a, 1000);
 		auctionAgent = a;
 	}
 
 
 	@Override
 	protected void onTick() {
-		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+		SimpleDateFormat datetimeFormatter = new SimpleDateFormat(Constant.DATE_FORMAT);
 		Date expireDate;		
 		try {
 			expireDate = datetimeFormatter.parse(auctionAgent.getAuctionDescription().getExpire());
@@ -47,46 +47,43 @@ public class TerminateAuction extends TickerBehaviour {
 		}	
 System.out.println("TerminateAuction: Expiretime "+ expireTime);
 System.out.println("TerminateAuction: Currenttime"+ System.currentTimeMillis());
-		//if(expireTime >= System.currentTimeMillis()){
-		if(true){
+		if(expireTime <= System.currentTimeMillis()){
+		//if(true){
 System.out.println("Sending terminate inform");			
 			DFAgentDescription template = new DFAgentDescription();
 			ServiceDescription serviceDescription = new ServiceDescription();
 			serviceDescription.setType(Constant.MAIN_TYPE);		
-			template.addServices(serviceDescription);		
+			template.addServices(serviceDescription);	
 			DFAgentDescription[] results = null;
 			AID mainAgent = null;
-			try {
-				results = DFService.search(myAgent, template);
-			} catch (FIPAException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-			if(results != null && results.length > 0){
-				//mainAgent = new AID();
-				mainAgent = results[0].getName();
-			}	
-			
 			ACLMessage inform = new ACLMessage(ACLMessage.INFORM);
 			try {
 				inform.setContentObject(auctionAgent.getAuctionDescription());
-			} catch (IOException e1) {
+				results = DFService.search(myAgent, template);
+				if(results != null && results.length > 0){
+					//mainAgent = new AID();
+					mainAgent = results[0].getName();
+				}	
+				if(mainAgent != null){
+					inform.addReceiver(mainAgent);
+					myAgent.send(inform);
+				}
+				inform.addReceiver(auctionAgent.getAuctionDescription().getAuctionner());
+				myAgent.send(inform);
+				
+				//notify all the bidders
+				for (AID bidder : auctionAgent.getBidders()) {																						
+					inform.addReceiver(bidder);							
+					myAgent.send(inform);				
+				}				
+				
+			} catch (FIPAException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			inform.addReceiver(auctionAgent.getAuctionDescription().getAuctionner());
-			myAgent.send(inform);
-			
-			if(mainAgent != null){
-				inform.addReceiver(mainAgent);
-				myAgent.send(inform);
-			}
-			//notify all the bidders
-			for (AID bidder : auctionAgent.getBidders()) {																						
-				inform.addReceiver(bidder);							
-				myAgent.send(inform);				
-			}				
 		}
 	}
 
