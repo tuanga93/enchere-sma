@@ -135,7 +135,7 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 		p = new JPanel();
 		p.add(addButton);
 		//thanhkm
-		//p.add(refreshButton);
+		p.add(refreshButton);
 		
 		getContentPane().add(p, BorderLayout.SOUTH);
 		
@@ -147,8 +147,8 @@ public class AuctionListGUI extends JFrame implements ActionListener{
 			}
 		} );
 		
-		setResizable(false);
-		
+//		setResizable(false);
+		setResizable(true);
 		
 	}
 	public void showGui() {

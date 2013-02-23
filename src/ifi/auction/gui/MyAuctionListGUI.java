@@ -149,7 +149,7 @@ System.out.println("bad%%%%%%%%%%%%%%%%%");
 
 		p = new JPanel();
 		p.add(addButton);
-		//p.add(refreshButton);
+		p.add(refreshButton);
 		
 		getContentPane().add(p, BorderLayout.SOUTH);
 		
@@ -161,8 +161,8 @@ System.out.println("bad%%%%%%%%%%%%%%%%%");
 			}
 		} );
 		
-		setResizable(false);
-		
+//		setResizable(false);
+		setResizable(true);
 		
 	}
 	public void showGui() {
