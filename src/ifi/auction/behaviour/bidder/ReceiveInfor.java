@@ -33,25 +33,32 @@ public class ReceiveInfor extends CyclicBehaviour{
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
 			try {	
-				System.out.println("Bidder ReceiveInfor: Receive message from "+ msg.getSender().getName());
+System.out.println("Bidder ReceiveInfor: Receive message from "+ msg.getSender().getName());
 				
 				Object content = msg.getContentObject();
 				if(content instanceof AuctionDescription){
-					//add auction
 					auctionDescription = (AuctionDescription) content;
-					BidGui bidGui = new BidGui(auctionDescription);
-					int result = JOptionPane.showConfirmDialog(null, bidGui, 
-				               "Faire un enchère", JOptionPane.OK_CANCEL_OPTION);
-				      if (result == JOptionPane.OK_OPTION) {
-						try {					
-							double biddingPrice = Double.parseDouble(bidGui.txtBiddingPrice.getText());
-							auctionDescription.setCurrentPrice(biddingPrice);
-							auctionDescription.setCurrentBidder(bidder.getAID());
-							bidder.bid(auctionDescription);			    	  
+					if (msg.getPerformative()==ACLMessage.INFORM){
+						if (auctionDescription.getCurrentBidder().equals(myAgent.getAID())){
+							System.out.println("+++Bidder ReceiveInfor: You have wined this auction");
 						}
-						catch (Exception e) {
-							//JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-						}			     
+					} else{
+						//Auction
+System.out.println("+++Bidder ReceiveInfor: Update AuctionDescription");
+						BidGui bidGui = new BidGui(auctionDescription);
+						int result = JOptionPane.showConfirmDialog(null, bidGui, 
+					               "Faire un enchère", JOptionPane.OK_CANCEL_OPTION);
+					      if (result == JOptionPane.OK_OPTION) {
+							try {					
+								double biddingPrice = Double.parseDouble(bidGui.txtBiddingPrice.getText());
+								auctionDescription.setCurrentPrice(biddingPrice);
+								auctionDescription.setCurrentBidder(bidder.getAID());
+								bidder.bid(auctionDescription);			    	  
+							}
+							catch (Exception e) {
+								//JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							}			     
+						}
 					}
 				}else {
 System.out.println("ReceiveInfor: receive Hashtable");					
@@ -59,7 +66,9 @@ System.out.println("ReceiveInfor: receive Hashtable");
 					if(bidder.getGui() == null){
 						bidder.setGui(new MyAuctionListGUI(bidder));					
 					}
-System.out.println(mapAuctionDescriptions.values());					
+System.out.println("ReceiveInfor: receive Hashtable");		
+System.out.println(mapAuctionDescriptions.values());	
+System.out.println("ReceiveInfor: receive Hashtable");		
 					List<AuctionDescription> auctionDescriptions = new ArrayList<AuctionDescription>(mapAuctionDescriptions.values()) ;
 					bidder.getGui().getModel().setAuctionDescriptions(auctionDescriptions);
 				}
