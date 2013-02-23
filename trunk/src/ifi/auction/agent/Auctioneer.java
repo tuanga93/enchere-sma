@@ -5,6 +5,7 @@ import java.util.List;
 
 import ifi.auction.AuctionDescription;
 import ifi.auction.Constant;
+import ifi.auction.behaviour.auctioneer.ReceiveInforAuctionner;
 import ifi.auction.behaviour.auctioneer.SendAuctionRequest;
 import ifi.auction.gui.AuctionListGUI;
 import ifi.auction.gui.AuctioneerGui;
@@ -47,7 +48,8 @@ public class Auctioneer extends CommonAuctionAgent{
 	}
 	public void addAuction(AuctionDescription au){
 		au.setAuctionner(getAID());
-		addBehaviour(new SendAuctionRequest(au));		
+		addBehaviour(new SendAuctionRequest(au));
+		addBehaviour(new ReceiveInforAuctionner(this));		
 	}
 	public List<AuctionDescription> getAuctionList(){
 		AuctionDescription a = new AuctionDescription("xxx", 1234, 124, "12346", "XXXXXXXXX");
@@ -56,4 +58,10 @@ public class Auctioneer extends CommonAuctionAgent{
 		b.add(a);
 		return b;
 	}
+	public AuctionListGUI getGui() {
+		return gui;
+	}
+	public void setGui(AuctionListGUI gui) {
+		this.gui = gui;
+	}	
 }

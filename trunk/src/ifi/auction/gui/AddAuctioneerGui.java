@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Calendar;
 
 import ifi.auction.AuctionDescription;
 import ifi.auction.Good;
@@ -19,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.jdesktop.swingx.JXDatePicker;
 
 public class AddAuctioneerGui extends JPanel {
 	
@@ -58,11 +61,20 @@ public class AddAuctioneerGui extends JPanel {
         layoutHelper.addLabel(lblMinStep, p);
         layoutHelper.addTextField(txtMinStep, p);
         layoutHelper.addLabel(lblExpire, p);
+        txtExpire.setText("Ajouter une date");
         layoutHelper.addTextField(txtExpire, p);
+        
+        final JXDatePicker datePicker = new JXDatePicker(Calendar.getInstance().getTime());        
+        datePicker.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		txtExpire.setText(datePicker.getDate().toString());
+        	}
+        });        
+        
         layoutHelper.addLabel(lblDescription, p);
         layoutHelper.addTextField(txtDescription, p);
 
 		add(p, BorderLayout.CENTER);
-		
+		add(datePicker);
 	}
 }
