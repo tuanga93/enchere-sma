@@ -93,13 +93,28 @@ public class MyAuctionListGUI extends JFrame implements ActionListener{
 					}else{
 					AuctionDescription auctionDescription = MyAuctionListGUI.this.getSelectedAuction();
 					BidGui bidGui = new BidGui(auctionDescription);
-					int result = JOptionPane.showConfirmDialog(null, bidGui, 
-				               "Faire un enchère", JOptionPane.OK_CANCEL_OPTION);
-				      if (result == JOptionPane.OK_OPTION) {
+					boolean error = true;
+					while(error){
+						int result = JOptionPane.showConfirmDialog(null, bidGui, 
+					               "Faire un enchère", JOptionPane.OK_CANCEL_OPTION);
+					    if (result == JOptionPane.OK_OPTION) {
 							try {					
 								double biddingPrice = Double.parseDouble(bidGui.txtBiddingPrice.getText());
-								auctionDescription.setCurrentPrice(biddingPrice);
-								auctionDescription.setCurrentBidder(bidder.getAID());
+								double currentPrice = auctionDescription.getCurrentPrice();
+								double minStep = auctionDescription.getMinStep();
+System.out.println("current price %%%%%%%%%%%%%%%%%%%%" + currentPrice);
+System.out.println("bidding price %%%%%%%%%%%%%%%%%%%%" + biddingPrice);
+System.out.println("currentPrice + minStep %%%%%%%%%%%%%%%%%%%%" + (currentPrice + minStep));
+								if(currentPrice + minStep > biddingPrice){
+System.out.println("good%%%%%%%%%%%%%%%%%");									
+									JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Invalid values", "Error", JOptionPane.ERROR_MESSAGE);
+								}else{
+System.out.println("bad%%%%%%%%%%%%%%%%%");									
+									auctionDescription.setCurrentPrice(biddingPrice);					
+									auctionDescription.setCurrentBidder(bidder.getAID());																	
+									bidder.bid(auctionDescription);
+									error = false;
+								}
 //								String productName = addAuctioneerGui.txtName.getText();
 //								double initialPrice = Double.parseDouble(addAuctioneerGui.txtPrice.getText());
 //								String expire = addAuctioneerGui.txtExpire.getText();
@@ -110,12 +125,14 @@ public class MyAuctionListGUI extends JFrame implements ActionListener{
 ////								//auctioneer.updateCatalogue(title, Integer.parseInt(price));
 ////								titleField.setText("");
 ////								priceField.setText("");
-								bidder.bid(auctionDescription);			    	  
 							}
 							catch (Exception e) {
 								JOptionPane.showMessageDialog(MyAuctionListGUI.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
 							}
-				      }
+					    }else{
+					    	error = false;
+					    }
+					}
 					}
 				}
 				catch (Exception e) {
