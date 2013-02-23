@@ -34,12 +34,14 @@ public class ReceiveInforAuctionner extends CyclicBehaviour {
 			try {
 				Object content = msg.getContentObject();
 				System.out.println("ReceiveInfor: receive Hashtable");
-				Hashtable<AID, AuctionDescription> mapAuctionDescriptions = (Hashtable<AID, AuctionDescription>) content;
-				System.out.println(mapAuctionDescriptions.values());
-				List<AuctionDescription> auctionDescriptions = new ArrayList<AuctionDescription>(
-						mapAuctionDescriptions.values());
-				auctioneer.getGui().getModel()
-						.setAuctionDescriptions(auctionDescriptions);
+				if(content instanceof Hashtable){
+					Hashtable<AID, AuctionDescription> mapAuctionDescriptions = (Hashtable<AID, AuctionDescription>) content;
+					System.out.println(mapAuctionDescriptions.values());
+					List<AuctionDescription> auctionDescriptions = new ArrayList<AuctionDescription>(
+							mapAuctionDescriptions.values());
+					auctioneer.getGui().getModel()
+							.setAuctionDescriptions(auctionDescriptions);
+				}
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

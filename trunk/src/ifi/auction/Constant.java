@@ -25,4 +25,7 @@ public class Constant {
 	public static final String LBL_EXPIRE = "Temps expirant";
 	public static final String LBL_DESCRIPTION = "Description";
 	public static final String MESSAGE_MISSING_FIELD = " est un champ obligatoire";
+	
+	
+	public static final String  DATE_FORMAT = "dd-MM-yyyy kk:mm:ss";
 }

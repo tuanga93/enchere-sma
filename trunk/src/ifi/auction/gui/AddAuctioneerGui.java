@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ifi.auction.AuctionDescription;
+import ifi.auction.Constant;
 import ifi.auction.Good;
 import ifi.auction.agent.Auctioneer;
 
@@ -63,9 +64,9 @@ public class AddAuctioneerGui extends JPanel {
         layoutHelper.addLabel(lblMinStep, p);
         layoutHelper.addTextField(txtMinStep, p);
         layoutHelper.addLabel(lblExpire, p);
-		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+		SimpleDateFormat datetimeFormatter = new SimpleDateFormat(Constant.DATE_FORMAT);		
 		Date date = new Date(System.currentTimeMillis() + 180000);
-System.out.println("AddAuctioneerGui: "+ System.currentTimeMillis() + 180000);
+System.out.println("AddAuctioneerGui: "+ (System.currentTimeMillis() + 180000));
 		String defaultDate = datetimeFormatter.format(date);
         txtExpire.setText(defaultDate);
         layoutHelper.addTextField(txtExpire, p);
@@ -74,7 +75,7 @@ System.out.println("AddAuctioneerGui: "+ System.currentTimeMillis() + 180000);
         datePicker.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Date date = datePicker.getDate();
-        		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        		SimpleDateFormat datetimeFormatter = new SimpleDateFormat(Constant.DATE_FORMAT);
         		String pickedDate = datetimeFormatter.format(date);       		
         		txtExpire.setText(pickedDate);
         	}

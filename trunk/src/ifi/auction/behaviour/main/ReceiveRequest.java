@@ -56,6 +56,10 @@ public class ReceiveRequest extends CyclicBehaviour {
 					System.out.println("Main ReceiveRequest: Send to " + msg.getSender().getName());
 				}
 				else {
+					Object contentObj = msg.getContentObject();
+					if(msg.getPerformative() == ACLMessage.INFORM){
+						
+					}else{
 					AuctionDescription auctionDescription = (AuctionDescription) msg.getContentObject();
 					AID auctioneer = msg.getSender();
 					if(mainAgent.getAuctionDescriptions().get(auctioneer) != null){
@@ -92,6 +96,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 						} catch (Exception any) {
 							any.printStackTrace();
 						}
+					}
 					}
 				}
 			} catch (UnreadableException e) {
