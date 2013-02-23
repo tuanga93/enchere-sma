@@ -24,32 +24,28 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
 public class TerminateAuction extends TickerBehaviour {
-
-	private AuctionDescription auctionDescription = null;
-	
-	private List<AID> bidders;
 	
 	private long expireTime = 0;
+	private Auction auctionAgent = null;
 	
-	public TerminateAuction(Agent a, List<AID> b, AuctionDescription auctionDes) {		
+	public TerminateAuction(Auction a) {		
 		super(a, 1);
-		bidders = b;
-		auctionDescription= auctionDes;
-		
-		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-		Date expireDate;
-		try {
-			expireDate = datetimeFormatter.parse(auctionDescription.getExpire());
-			expireTime = expireDate.getTime();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+		auctionAgent = a;
 	}
 
 
 	@Override
 	protected void onTick() {
+		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+		Date expireDate;		
+		try {
+			expireDate = datetimeFormatter.parse(auctionAgent.getAuctionDescription().getExpire());
+			expireTime = expireDate.getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
 		if(expireTime >= System.currentTimeMillis()){
 			DFAgentDescription template = new DFAgentDescription();
 			ServiceDescription serviceDescription = new ServiceDescription();
@@ -69,13 +65,13 @@ public class TerminateAuction extends TickerBehaviour {
 			}			
 			ACLMessage inform = new ACLMessage(ACLMessage.INFORM);
 			try {
-				inform.setContentObject(auctionDescription);
+				inform.setContentObject(auctionAgent.getAuctionDescription());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
-			inform.addReceiver(auctionDescription.getAuctionner());
+			inform.addReceiver(auctionAgent.getAuctionDescription().getAuctionner());
 			myAgent.send(inform);
 			
 			if(mainAgent != null){
@@ -83,7 +79,7 @@ public class TerminateAuction extends TickerBehaviour {
 				myAgent.send(inform);
 			}
 			//notify all the bidders
-			for (AID bidder : bidders) {																						
+			for (AID bidder : auctionAgent.getBidders()) {																						
 				inform.addReceiver(bidder);							
 				myAgent.send(inform);				
 			}				

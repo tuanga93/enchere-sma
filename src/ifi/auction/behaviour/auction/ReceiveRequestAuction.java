@@ -15,10 +15,9 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 	
 	private Auction auctionAgent;
 	
-	public ReceiveRequestAuction(Auction a, AuctionDescription auctionDes) {
+	public ReceiveRequestAuction(Auction a) {
 		// TODO Auto-generated constructor stub
-		auctionAgent = a;
-		auctionDescription= auctionDes;
+		auctionAgent = a;		
 	}
 
 	@Override
@@ -48,6 +47,7 @@ public class ReceiveRequestAuction extends CyclicBehaviour {
 						auctionAgent.addBehaviour(new NotifyMain(auctionDescription));
 					}else if(msg.getPerformative() == ACLMessage.CFP){
 						auctionAgent.setAuctionDescription(auctionDescription);
+						auctionAgent.addBehaviour(new TerminateAuction(auctionAgent));
 					}
 				}
 			} catch (UnreadableException e) {
