@@ -48,7 +48,7 @@ public class ReceiveRequest extends CyclicBehaviour {
 				}else if (content.equals(Constant.GET_AUCTION_LIST_AUCTIONNER)){
 					// Message received. Process it
 					System.out.println("Main ReceiveRequest:"+content +"Receive getAuction list");
-					System.out.println("Main ReceiveRequest:Get sendername: ----"+msg.getSender().getName());
+					System.out.println("Main ReceiveRequest: Get sendername: ----"+msg.getSender().getName());
 
 					ACLMessage reply = msg.createReply();
 					reply.setContentObject(mainAgent.getAuctionDescriptions(msg.getSender()));
