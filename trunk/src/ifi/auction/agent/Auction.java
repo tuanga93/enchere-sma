@@ -34,6 +34,7 @@ public class Auction extends Agent {
 			e.printStackTrace();
 		}
 		addBehaviour(new ReceiveRequestAuction(this, auctionDescription));
+		addBehaviour(new TerminateAuction(this, bidders, auctionDescription));
 //		addBehaviour(new SendAuctionInfor());
 	}
 	public List<AID> getBidders() {

@@ -8,7 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import ifi.auction.AuctionDescription;
 import ifi.auction.Good;
@@ -61,13 +63,19 @@ public class AddAuctioneerGui extends JPanel {
         layoutHelper.addLabel(lblMinStep, p);
         layoutHelper.addTextField(txtMinStep, p);
         layoutHelper.addLabel(lblExpire, p);
-        txtExpire.setText("Ajouter une date");
+		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+		Date date = new Date(System.currentTimeMillis() + 180000);
+		String defaultDate = datetimeFormatter.format(date);
+        txtExpire.setText(defaultDate);
         layoutHelper.addTextField(txtExpire, p);
         
         final JXDatePicker datePicker = new JXDatePicker(Calendar.getInstance().getTime());        
         datePicker.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		txtExpire.setText(datePicker.getDate().toString());
+        		Date date = datePicker.getDate();
+        		SimpleDateFormat datetimeFormatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        		String pickedDate = datetimeFormatter.format(date);       		
+        		txtExpire.setText(pickedDate);
         	}
         });        
         
