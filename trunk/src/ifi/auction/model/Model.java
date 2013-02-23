@@ -76,7 +76,7 @@ public class Model extends AbstractTableModel{
 	}
 
 	public void setAuctionDescriptions(List<AuctionDescription> auctionDescriptions) {
-		System.out.println("Change data");
+		System.out.println("Model.java: Change data");
 		this.auctionDescriptions = auctionDescriptions;
 		fireTableDataChanged();
 	}
