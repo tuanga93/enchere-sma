@@ -32,7 +32,9 @@ public class ReceiveInfor extends CyclicBehaviour{
 	public void action() {
 		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
-			try {				
+			try {	
+				System.out.println("Bidder ReceiveInfor: Receive message from "+ msg.getSender().getName());
+				
 				Object content = msg.getContentObject();
 				if(content instanceof AuctionDescription){
 					//add auction
